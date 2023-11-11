@@ -12,6 +12,9 @@
 		512C38272AFCA51E0072D104 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512C38262AFCA51E0072D104 /* Item.swift */; };
 		512C38292AFCA51F0072D104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C38282AFCA51F0072D104 /* Assets.xcassets */; };
 		512C382D2AFCA51F0072D104 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C382C2AFCA51F0072D104 /* Preview Assets.xcassets */; };
+		5154EAC22AFEEC74007C24B2 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5154EAC12AFEEC74007C24B2 /* SwiftSoup */; };
+		5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */; };
+		5154EAC62AFF089E007C24B2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC52AFF089E007C24B2 /* Game.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,8 @@
 		512C382A2AFCA51F0072D104 /* DraggableConnections.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DraggableConnections.entitlements; sourceTree = "<group>"; };
 		512C382C2AFCA51F0072D104 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		512C382E2AFCA51F0072D104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsApi.swift; sourceTree = "<group>"; };
+		5154EAC52AFF089E007C24B2 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5154EAC22AFEEC74007C24B2 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +64,8 @@
 				512C38222AFCA51E0072D104 /* DraggableConnectionsApp.swift */,
 				512C38242AFCA51E0072D104 /* ContentView.swift */,
 				512C38262AFCA51E0072D104 /* Item.swift */,
+				5154EAC52AFF089E007C24B2 /* Game.swift */,
+				5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */,
 				512C38282AFCA51F0072D104 /* Assets.xcassets */,
 				512C382A2AFCA51F0072D104 /* DraggableConnections.entitlements */,
 				512C382E2AFCA51F0072D104 /* Info.plist */,
@@ -81,6 +89,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 512C38312AFCA51F0072D104 /* Build configuration list for PBXNativeTarget "DraggableConnections" */;
 			buildPhases = (
+				51098AD72AFEE35A0002B2A0 /* ShellScript */,
 				512C381B2AFCA51E0072D104 /* Sources */,
 				512C381C2AFCA51E0072D104 /* Frameworks */,
 				512C381D2AFCA51E0072D104 /* Resources */,
@@ -90,6 +99,9 @@
 			dependencies = (
 			);
 			name = DraggableConnections;
+			packageProductDependencies = (
+				5154EAC12AFEEC74007C24B2 /* SwiftSoup */,
+			);
 			productName = DraggableConnections;
 			productReference = 512C381F2AFCA51E0072D104 /* DraggableConnections.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +130,9 @@
 				Base,
 			);
 			mainGroup = 512C38162AFCA51E0072D104;
+			packageReferences = (
+				5154EAC02AFEEC74007C24B2 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = 512C38202AFCA51E0072D104 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,11 +154,33 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		51098AD72AFEE35A0002B2A0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swift-format >/dev/null; then\n    swift-format -m format -i -r ${PROJECT_DIR}\nelse\n    echo \"warning: swift-format not installed\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		512C381B2AFCA51E0072D104 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */,
+				5154EAC62AFF089E007C24B2 /* Game.swift in Sources */,
 				512C38252AFCA51E0072D104 /* ContentView.swift in Sources */,
 				512C38272AFCA51E0072D104 /* Item.swift in Sources */,
 				512C38232AFCA51E0072D104 /* DraggableConnectionsApp.swift in Sources */,
@@ -273,6 +310,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DraggableConnections/DraggableConnections.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DraggableConnections/Preview Content\"";
@@ -298,6 +336,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bebopbeluga.DraggableConnections;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -312,6 +351,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DraggableConnections/DraggableConnections.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DraggableConnections/Preview Content\"";
@@ -337,6 +377,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bebopbeluga.DraggableConnections;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -367,6 +408,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5154EAC02AFEEC74007C24B2 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5154EAC12AFEEC74007C24B2 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5154EAC02AFEEC74007C24B2 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 512C38172AFCA51E0072D104 /* Project object */;
 }
