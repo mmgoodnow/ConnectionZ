@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct DraggableConnectionsApp: App {
     var sharedModelContainer: ModelContainer = {
-      let schema = Schema([Group.self, Game.self])
+      let schema = Schema([])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
