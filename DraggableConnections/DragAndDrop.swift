@@ -13,7 +13,6 @@ struct ReorderableForEach<Content: View, Item: Identifiable & Equatable>: View {
   let items: [Item]
   let content: (Item) -> Content
   let moveAction: (IndexSet, Int) -> Void
-  let clickAction: (Int) -> Void
   
   // A little hack that is needed in order to make view back opaque
   // if the drag and drop hasn't ever changed the position
@@ -23,13 +22,11 @@ struct ReorderableForEach<Content: View, Item: Identifiable & Equatable>: View {
   init(
     items: [Item],
     @ViewBuilder content: @escaping (Item) -> Content,
-    moveAction: @escaping (IndexSet, Int) -> Void,
-    clickAction: @escaping (Int) -> Void
+    moveAction: @escaping (IndexSet, Int) -> Void
   ) {
     self.items = items
     self.content = content
     self.moveAction = moveAction
-    self.clickAction = clickAction
   }
   
   @State private var draggingItem: Item?
@@ -48,10 +45,12 @@ struct ReorderableForEach<Content: View, Item: Identifiable & Equatable>: View {
             item: item,
             listData: items,
             current: $draggingItem,
-            hasChangedLocation: $hasChangedLocation,
-            moveAction: { from, to in withAnimation { moveAction(from, to) } },
-            clickAction: { i in withAnimation { clickAction(i) } }
-          )
+            hasChangedLocation: $hasChangedLocation
+          ) { from, to in
+            withAnimation {
+              moveAction(from, to)
+            }
+          }
         )
     }
   }
@@ -64,7 +63,6 @@ struct DragRelocateDelegate<Item: Equatable>: DropDelegate {
   @Binding var hasChangedLocation: Bool
   
   var moveAction: (IndexSet, Int) -> Void
-  var clickAction: (Int) -> Void
   
   func dropEntered(info: DropInfo) {
     guard item != current, let current = current else { return }
@@ -74,8 +72,6 @@ struct DragRelocateDelegate<Item: Equatable>: DropDelegate {
     
     if listData[to] != current {
       moveAction(IndexSet(integer: from), to > from ? to + 1 : to)
-    } else {
-      clickAction(to)
     }
   }
   

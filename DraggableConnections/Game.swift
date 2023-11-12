@@ -47,7 +47,6 @@ struct GameData: Codable, Identifiable {
   let id: Int
   var words: [String]
   let groups: [Group]
-  var selected = Set<String>()
   var guesses = [(Set<String>, Int)]()
   
   init(id: Int, words: [String], groups: [Group]) {
@@ -73,20 +72,12 @@ struct GameData: Codable, Identifiable {
     
     if closestGroup.score(of: candidates) == 4 {
       closestGroup.found = true;
-      self.words = self.words.filter { closestGroup.words.contains($0) }
+      self.words = self.words.filter { !closestGroup.words.contains($0) }
     }
     guesses.append((candidates, closestGroup.score(of: candidates)))
   }
   
-  func select(_ word: String) -> Void {
-    if self.selected.contains(word) {
-      self.selected.remove(word);
-    } else if selected.count < 4 {
-      self.selected.insert(word);
-    }
-  }
-  
-  func select(at i: Int) -> Void {
-    return self.select(words[i])
+  func guess(row indices: Range<Int>) {
+    return self.guess(words: Set(self.words[indices]))
   }
 }

@@ -17,30 +17,24 @@ extension String: Identifiable {
 
 struct Tile: View {
   var word: String
-  var isSelected: Bool
-  var onSelect: (String) -> Void
   
   var body: some View {
-    if (isSelected) {
-      Text(word)
-        .fixedSize(horizontal: true, vertical: true)
-        .multilineTextAlignment(.center)
-        .padding()
-        .frame(width: 100, height: 100)
-        .foregroundStyle(.black)
-        .bold()
-        .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(Color.white))
-        .colorInvert()
-    } else {
-      Text(word)
-        .fixedSize(horizontal: true, vertical: true)
-        .multilineTextAlignment(.center)
-        .padding()
-        .frame(width: 100, height: 100)
-        .foregroundStyle(.black)
-        .bold()
-        .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(Color.white))
-    }
+    Text(word)
+      .fixedSize(horizontal: true, vertical: true)
+      .multilineTextAlignment(.center)
+      .padding()
+      .frame(width: 100, height: 100)
+      .foregroundStyle(.black)
+      .bold()
+      .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(Color.white))
+  }
+}
+
+struct GuessButton: View {
+  let guessAction: () -> Void
+  
+  var body: some View {
+    Button("Guess", action: { guessAction() }).padding().frame(width: 100, height: 100)
   }
 }
 
@@ -58,14 +52,21 @@ struct GameView: View {
   }
   
   var body: some View {
-    LazyVGrid(columns: cols, content: {
-      ReorderableForEach(items: game.words) { word in
-        Tile(word: word, isSelected: game.selected.contains(word), onSelect: { game.select($0) })
-      } moveAction: { from, to in
-        game.words.move(fromOffsets: from, toOffset: to)
-      } clickAction: { i in
-        game.select(at: i)
-      }
-    })
+    HStack {
+      Spacer()
+      LazyVGrid(columns: cols, content: {
+        ReorderableForEach(items: game.words) { word in
+          Tile(word: word)
+        } moveAction: { from, to in
+          game.words.move(fromOffsets: from, toOffset: to)
+        }
+      })
+      VStack {
+        GuessButton(guessAction: { game.guess(row: 0..<4) })
+        GuessButton(guessAction: { game.guess(row: 4..<8) })
+        GuessButton(guessAction: { game.guess(row: 8..<12) })
+        GuessButton(guessAction: { game.guess(row: 12..<16) })
+      }.frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
   }
 }
