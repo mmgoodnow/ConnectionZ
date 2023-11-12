@@ -8,22 +8,35 @@
 import Foundation
 import SwiftUI
 
+extension String: Identifiable {
+    public typealias ID = Int
+    public var id: Int {
+        return hash
+    }
+}
+
 struct Tile: View {
   var word: String
   
   var body: some View {
-      Text(word)
-          .fixedSize(horizontal: true, vertical: true)
-          .multilineTextAlignment(.center)
-          .padding()
-          .frame(width: 100, height: 100)
-          .foregroundStyle(.black)
-          .bold()
-          .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(Color.white).shadow(radius: 3))
-    }
+    Text(word)
+      .fixedSize(horizontal: true, vertical: true)
+      .multilineTextAlignment(.center)
+      .padding()
+      .frame(width: 100, height: 100)
+      .foregroundStyle(.black)
+      .bold()
+      .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(Color.white))
+  }
 }
 
 struct GameView: View {
+  let cols = [
+    GridItem(.fixed(100), spacing: 10),
+    GridItem(.fixed(100), spacing: 10),
+    GridItem(.fixed(100), spacing: 10),
+    GridItem(.fixed(100), spacing: 10)
+  ]
   var game: Game
   
   init(gameData: GameData) {
@@ -31,31 +44,12 @@ struct GameView: View {
   }
   
   var body: some View {
-    Grid {
-      GridRow {
-        Tile(word: game.words[0])
-        Tile(word: game.words[1])
-        Tile(word: game.words[2])
-        Tile(word: game.words[3])
+    LazyVGrid(columns: cols, content: {
+      ReorderableForEach(items: game.words) { word in
+        Tile(word: word)
+      } moveAction: { from, to in
+        game.words.move(fromOffsets: from, toOffset: to)
       }
-      GridRow {
-        Tile(word: game.words[4])
-        Tile(word: game.words[5])
-        Tile(word: game.words[6])
-        Tile(word: game.words[7])
-      }
-      GridRow {
-        Tile(word: game.words[8])
-        Tile(word: game.words[9])
-        Tile(word: game.words[10])
-        Tile(word: game.words[11])
-      }
-      GridRow {
-        Tile(word: game.words[12])
-        Tile(word: game.words[13])
-        Tile(word: game.words[14])
-        Tile(word: game.words[15])
-      }
-    }
+    })
   }
 }

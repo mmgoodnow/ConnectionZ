@@ -47,6 +47,7 @@ struct ContentView: View {
     } detail: {
       Text("Select an item")
     }
+    .onAppear(perform: loadItems)
   }
   
   private func loadItems() {

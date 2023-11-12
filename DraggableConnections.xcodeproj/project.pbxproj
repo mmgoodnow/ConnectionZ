@@ -16,6 +16,7 @@
 		5154EAC62AFF089E007C24B2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC52AFF089E007C24B2 /* Game.swift */; };
 		5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC72AFFECAD007C24B2 /* GameView.swift */; };
 		5154EACA2B0015C0007C24B2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC92B0015C0007C24B2 /* Item.swift */; };
+		5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		5154EAC52AFF089E007C24B2 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		5154EAC72AFFECAD007C24B2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		5154EAC92B0015C0007C24B2 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				5154EAC52AFF089E007C24B2 /* Game.swift */,
 				5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */,
 				5154EAC72AFFECAD007C24B2 /* GameView.swift */,
+				5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */,
 				512C38282AFCA51F0072D104 /* Assets.xcassets */,
 				512C382A2AFCA51F0072D104 /* DraggableConnections.entitlements */,
 				512C382E2AFCA51F0072D104 /* Info.plist */,
@@ -182,6 +185,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */,
 				5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */,
 				5154EAC62AFF089E007C24B2 /* Game.swift in Sources */,
 				512C38252AFCA51E0072D104 /* ContentView.swift in Sources */,
