@@ -9,15 +9,15 @@ import Foundation
 import SwiftSoup
 
 struct ConnectionsApi {
-  static func parseGamesFromResponse(data: Data) -> [Game] {
+  private static func parseGamesFromResponse(data: Data) -> [GameData] {
     let document: Document = try! SwiftSoup.parse(String(data: data, encoding: .utf8)!)
     let scriptTags = try! document.select("script[type=\"text/javascript\"]")
     let js = try! scriptTags.first()!.html()
     let json = js.replacingOccurrences(of: "window.gameData = ", with: "")
-    return try! JSONDecoder().decode([Game].self, from: json.data(using: .utf8)!)
+    return try! JSONDecoder().decode([GameData].self, from: json.data(using: .utf8)!)
   }
   
-  static func fetchAllConnectionsGames() async -> [Game]  {
+  static func fetchAllConnectionsGames() async -> [GameData]  {
     let url = URL(string: "https://nytimes.com/games/connections")!
     let (data, _) = try! await URLSession.shared.data(from: url)
     return self.parseGamesFromResponse(data: data);

@@ -10,58 +10,58 @@ import SwiftData
 import SwiftSoup
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
-    var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+  @State var isFetching = false
+  @State var allGames = [GameData]()
+  
+  var body: some View {
+    NavigationSplitView {
+      if isFetching {
+        Text("isFetching")
+      } else {
+        List {
+          ForEach(allGames) { gameData in
+            NavigationLink {
+              GameView(gameData: gameData)
+            } label: {
+              Text("Game \(gameData.id)")
             }
+          }
+          .onDelete(perform: deleteItems)
+        }
 #if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+        .navigationSplitViewColumnWidth(min: 180, ideal: 200)
 #endif
-            .toolbar {
+        .toolbar {
 #if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
+          ToolbarItem(placement: .navigationBarTrailing) {
+            EditButton()
+          }
 #endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+          ToolbarItem {
+            Button(action: loadItems) {
+              Label("Add Item", systemImage: "plus")
+              
             }
-        } detail: {
-            Text("Select an item")
-        }
+          }
+        }}
+    } detail: {
+      Text("Select an item")
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
+  }
+  
+  private func loadItems() {
+    self.isFetching = true;
+    Task {
+      self.allGames = await ConnectionsApi.fetchAllConnectionsGames()
+      self.isFetching = false;
     }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
+  }
+  
+  private func deleteItems(offsets: IndexSet) {
+    withAnimation {
+        allGames.remove(atOffsets: offsets)
     }
+  }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-}
+

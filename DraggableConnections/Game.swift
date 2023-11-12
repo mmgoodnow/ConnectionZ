@@ -6,43 +6,54 @@
 //
 
 import Foundation
+import SwiftData
 
-
-//{
-//  "id": 0,
-//  "groups": {
-//    "WET WEATHER": {
-//      "level": 0,
-//      "members": ["HAIL", "RAIN", "SLEET", "SNOW"]
-//    },
-//    "NBA TEAMS": {
-//      "level": 1,
-//      "members": ["BUCKS", "HEAT", "JAZZ", "NETS"]
-//    },
-//    "KEYBOARD KEYS": {
-//      "level": 2,
-//      "members": ["OPTION", "RETURN", "SHIFT", "TAB"]
-//    },
-//    "PALINDROMES": {
-//      "level": 3,
-//      "members": ["KAYAK", "LEVEL", "MOM", "RACE CAR"]
-//    }
-//  },
-//  "startingGroups": [
-//    ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
-//    ["HEAT", "TAB", "BUCKS", "RETURN"],
-//    ["JAZZ", "HAIL", "OPTION", "RAIN"],
-//    ["SLEET", "RACE CAR", "MOM", "NETS"]
-//  ]
-//}
-
-struct Group: Codable {
+struct GroupData: Codable {
   let level: Int
   let members: [String]
 }
 
-struct Game: Codable {
+struct GameData: Codable, Identifiable {
   let id: Int
-  let groups: Dictionary<String, Group>
+  let groups: Dictionary<String, GroupData>
   let startingGroups: [[String]]
+  
+  func toJsonString() -> String {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted
+    let data = try! encoder.encode(self)
+    return String(data: data, encoding: .utf8)!
+  }
+}
+
+@Model class Group {
+  let name: String
+  let level: Int
+  let words: [String]
+  
+  init(name: String, level: Int, words: [String]) {
+    self.name = name
+    self.level = level
+    self.words = words
+  }
+}
+
+@Model class Game: Identifiable {
+  let id: Int
+  var words: [String]
+  let groups: [Group]
+  
+  init(id: Int, words: [String], groups: [Group]) {
+    self.id = id
+    self.words = words
+    self.groups = groups
+  }
+  
+  static func from(gameData: GameData) -> Game {
+    let words = gameData.startingGroups.flatMap {$0}
+    let groups = gameData.groups.map { (groupName, groupData) in
+      return Group(name: groupName, level: groupData.level, words: groupData.members)
+    }
+    return Game(id: gameData.id, words: words, groups: groups)
+  }
 }
