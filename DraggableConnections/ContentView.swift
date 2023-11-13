@@ -21,7 +21,7 @@ struct ContentView: View {
         List {
           ForEach(allGames) { gameData in
             NavigationLink {
-              GameView(gameData: gameData)
+              GameView(game: Game.from(gameData: gameData))
             } label: {
               Text("Game \(gameData.id)")
             }
@@ -29,7 +29,7 @@ struct ContentView: View {
           .onDelete(perform: deleteItems)
         }
 #if os(macOS)
-        .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+        .navigationSplitViewColumnWidth(min: 100, ideal: 200)
 #endif
         .toolbar {
 #if os(iOS)

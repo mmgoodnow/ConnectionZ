@@ -24,13 +24,21 @@ struct GameData: Codable, Identifiable {
     let data = try! encoder.encode(self)
     return String(data: data, encoding: .utf8)!
   }
+  
+  static func from(json: String) -> GameData {
+    return try! JSONDecoder().decode(GameData.self, from: json.data(using: .utf8)!)
+  }
 }
 
-@Observable class Group {
+@Observable class Group: Identifiable {
   let name: String
   let level: Int
   let words: Set<String>
   var found = false
+  
+  var id: String {
+    return name
+  }
   
   init(name: String, level: Int, words: Set<String>) {
     self.name = name
@@ -43,16 +51,39 @@ struct GameData: Codable, Identifiable {
   }
 }
 
+@Observable class Guess: Identifiable {
+  let words: Set<String>
+  let score: Int
+  
+  var id: Set<String> { return words }
+  
+  init(words: Set<String>, score: Int) {
+    self.words = words
+    self.score = score
+  }
+}
+
 @Observable class Game: Identifiable {
   let id: Int
   var words: [String]
   let groups: [Group]
-  var guesses = [(Set<String>, Int)]()
+  var guesses = [Guess]()
   
   init(id: Int, words: [String], groups: [Group]) {
     self.id = id
     self.words = words
     self.groups = groups
+  }
+  
+  var foundGroups: [Group] {
+    let correctGuesses = guesses.filter{guess in return guess.score == 4}
+    return correctGuesses.map { guess in
+      return groups.first { group in return group.words == guess.words }!
+    }
+  }
+  
+  var numFoundGroups: Int {
+    return foundGroups.count
   }
   
   static func from(gameData: GameData) -> Game {
@@ -64,6 +95,10 @@ struct GameData: Codable, Identifiable {
   }
   
   func guess(words candidates: Set<String>) -> Void {
+    if guesses.contains(where: { $0.words == candidates }) {
+      return;
+    }
+    
     let closestGroup: Group = self.groups.reduce(self.groups[0]) {acc, cur in
       let accCount = acc.score(of: candidates)
       let curCount = cur.score(of: candidates)
@@ -74,10 +109,15 @@ struct GameData: Codable, Identifiable {
       closestGroup.found = true;
       self.words = self.words.filter { !closestGroup.words.contains($0) }
     }
-    guesses.append((candidates, closestGroup.score(of: candidates)))
+    
+    guesses.append(Guess(words: candidates, score: closestGroup.score(of: candidates)))
   }
   
   func guess(row indices: Range<Int>) {
     return self.guess(words: Set(self.words[indices]))
+  }
+  
+  func shuffle() {
+    self.words.shuffle()
   }
 }

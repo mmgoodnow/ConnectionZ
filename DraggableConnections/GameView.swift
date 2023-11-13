@@ -30,11 +30,58 @@ struct Tile: View {
   }
 }
 
-struct GuessButton: View {
-  let guessAction: () -> Void
+struct CompletedGroup: View {
+  let group: Group
+  
+  func color() -> Color {
+    switch (group.level) {
+    case 0: return Color(.displayP3, red: 245/256, green: 224/256, blue: 126/256)
+    case 1: return Color(.displayP3, red: 167/256, green: 194/256, blue: 104/256)
+    case 2: return Color(.displayP3, red: 180/256, green: 195/256, blue: 235/256)
+    case 3: return Color(.displayP3, red: 178/256, green: 131/256, blue: 193/256)
+    default: return Color.black
+    }
+  }
   
   var body: some View {
-    Button("Guess", action: { guessAction() }).padding().frame(width: 100, height: 100)
+    VStack {
+      Text(group.name).font(.title).bold().foregroundStyle(.black)
+      Text(group.words.sorted().joined(separator: ", ")).foregroundStyle(.black)
+    }
+    .frame(width: 430, height: 100)
+    .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(color()))
+    .foregroundStyle(.white)
+    
+  }
+}
+
+struct CompletedGroups: View {
+  let groups: [Group]
+  var body: some View {
+    ForEach(groups) { group in
+      CompletedGroup(group: group)
+    }
+  }
+}
+
+struct GuessView: View {
+  let i: Int
+  let guess: Guess
+  
+  var icon: String {
+    if guess.score == 4 {
+      return "star"
+    } else if guess.score == 3 {
+      return "circle.fill"
+    } else {
+      return "circle"
+    }
+  }
+  
+  var body: some View {
+    GridRow {
+      Label(guess.words.sorted().joined(separator: ", "), systemImage: icon).font(.headline)
+    }
   }
 }
 
@@ -47,13 +94,9 @@ struct GameView: View {
   ]
   var game: Game
   
-  init(gameData: GameData) {
-    self.game = Game.from(gameData: gameData)
-  }
-  
   var body: some View {
-    HStack {
-      Spacer()
+    VStack {
+      CompletedGroups(groups: game.foundGroups)
       LazyVGrid(columns: cols, content: {
         ReorderableForEach(items: game.words) { word in
           Tile(word: word)
@@ -61,12 +104,29 @@ struct GameView: View {
           game.words.move(fromOffsets: from, toOffset: to)
         }
       })
-      VStack {
-        GuessButton(guessAction: { game.guess(row: 0..<4) })
-        GuessButton(guessAction: { game.guess(row: 4..<8) })
-        GuessButton(guessAction: { game.guess(row: 8..<12) })
-        GuessButton(guessAction: { game.guess(row: 12..<16) })
-      }.frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
+      HStack {
+        Button("Guess Top Row") {
+          game.guess(row: 0..<4)
+        }.buttonStyle(.bordered)
+        
+        Button("Shuffle") {
+          game.shuffle()
+        }.buttonStyle(.bordered)
+      }.padding()
+      Grid(alignment: .leading) {
+        ForEach(Array(game.guesses.enumerated()), id: \.offset) {
+          i, guess in
+          GuessView(i: i, guess: guess)
+        }
+      }.padding()
+    }.padding()
   }
+}
+
+#Preview {
+  let gameData = GameData.from(json: "{\"id\":150,\"groups\":{\"DOCTORS’ ORDERS\":{\"level\":0,\"members\":[\"DIET\",\"EXERCISE\",\"FRESH AIR\",\"SLEEP\"]},\"EMAIL ACTIONS\":{\"level\":1,\"members\":[\"COMPOSE\",\"FORWARD\",\"REPLY ALL\",\"SEND\"]},\"PODCASTS\":{\"level\":2,\"members\":[\"RADIOLAB\",\"SERIAL\",\"UP FIRST\",\"WTF\"]},\"___ COMEDY\":{\"level\":3,\"members\":[\"BLACK\",\"DIVINE\",\"PROP\",\"SKETCH\"]}},\"startingGroups\":[[\"COMPOSE\",\"DIVINE\",\"EXERCISE\",\"SEND\"],[\"FRESH AIR\",\"FORWARD\",\"SERIAL\",\"SKETCH\"],[\"WTF\",\"PROP\",\"UP FIRST\",\"DIET\"],[\"BLACK\",\"RADIOLAB\",\"SLEEP\",\"REPLY ALL\"]]}")
+  var game = Game.from(gameData: gameData)
+  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
+  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
+  return GameView(game: game)
 }

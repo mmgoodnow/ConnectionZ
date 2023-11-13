@@ -10,7 +10,8 @@ import SwiftSoup
 
 struct ConnectionsApi {
   private static func parseGamesFromResponse(data: Data) -> [GameData] {
-    let document: Document = try! SwiftSoup.parse(String(data: data, encoding: .utf8)!)
+    let dataStr = String(data: data, encoding: .utf8)!
+    let document: Document = try! SwiftSoup.parse(dataStr)
     let scriptTags = try! document.select("script[type=\"text/javascript\"]")
     let js = try! scriptTags.first()!.html()
     let json = js.replacingOccurrences(of: "window.gameData = ", with: "")
