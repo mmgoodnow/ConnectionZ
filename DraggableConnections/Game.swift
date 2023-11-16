@@ -46,6 +46,16 @@ struct GameData: Codable, Identifiable {
     self.words = Set(words)
   }
   
+  func emoji() -> String {
+    switch (level) {
+    case 0: return "🟨"
+    case 1: return "🟩"
+    case 2: return "🟦"
+    case 3: return "🟪"
+    default: return "⬛️"
+    }
+  }
+  
   func score(of guess: Set<String>) -> Int {
     return self.words.intersection(guess).count
   }
@@ -76,7 +86,7 @@ struct GameData: Codable, Identifiable {
   }
   
   var foundGroups: [Group] {
-    let correctGuesses = guesses.filter{guess in return guess.score == 4}
+    let correctGuesses = guesses.filter{ guess in return guess.score == 4}
     return correctGuesses.map { guess in
       return groups.first { group in return group.words == guess.words }!
     }
@@ -84,6 +94,10 @@ struct GameData: Codable, Identifiable {
   
   var numFoundGroups: Int {
     return foundGroups.count
+  }
+  
+  var isComplete: Bool {
+    return self.words.isEmpty
   }
   
   static func from(gameData: GameData) -> Game {
@@ -119,5 +133,14 @@ struct GameData: Codable, Identifiable {
   
   func shuffle() {
     self.words.shuffle()
+  }
+  
+  func emojis() -> String {
+    let emojis = guesses.map { guess in
+      guess.words.sorted().map { word in
+        self.groups.first { $0.words.contains(word) }!.emoji()
+      }.joined(separator: "")
+    }.joined(separator: "\n")
+    return "ConnectionZ\nPuzzle #\(self.id)\n\(emojis)"
   }
 }

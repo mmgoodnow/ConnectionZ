@@ -70,7 +70,7 @@ struct GuessView: View {
   
   var icon: String {
     if guess.score == 4 {
-      return "star"
+      return "star.fill"
     } else if guess.score == 3 {
       return "circle.fill"
     } else {
@@ -96,6 +96,7 @@ struct GameView: View {
   
   var body: some View {
     VStack {
+      Text("Create four groups of four!").font(.title2)
       CompletedGroups(groups: game.foundGroups)
       LazyVGrid(columns: cols, content: {
         ReorderableForEach(items: game.words) { word in
@@ -105,13 +106,21 @@ struct GameView: View {
         }
       })
       HStack {
-        Button("Guess Top Row") {
-          game.guess(row: 0..<4)
-        }.buttonStyle(.bordered)
-        
-        Button("Shuffle") {
-          game.shuffle()
-        }.buttonStyle(.bordered)
+        if game.isComplete {
+          HStack {
+            Text("Complete!").font(.largeTitle)
+            Button("Copy Results") {
+              copyToClipboard(game.emojis())
+            }
+          }
+        } else {
+          Button("Guess Top Row") {
+            game.guess(row: 0..<4)
+          }.buttonStyle(.bordered)
+          Button("Shuffle") {
+            game.shuffle()
+          }.buttonStyle(.bordered)
+        }
       }.padding()
       Grid(alignment: .leading) {
         ForEach(Array(game.guesses.enumerated()), id: \.offset) {
@@ -128,5 +137,7 @@ struct GameView: View {
   var game = Game.from(gameData: gameData)
   game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
   game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
+  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
+  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
   return GameView(game: game)
 }
