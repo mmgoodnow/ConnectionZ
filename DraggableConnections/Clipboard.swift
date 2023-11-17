@@ -6,7 +6,13 @@
 //
 
 import Foundation
+
+#if os(iOS)
+import UIKit
+#endif
+#if os(macOS)
 import AppKit
+#endif
 
 func copyToClipboard(_ str: String) -> Void {
 #if os(iOS)

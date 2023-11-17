@@ -20,13 +20,28 @@ struct Tile: View {
   
   var body: some View {
     Text(word)
-      .fixedSize(horizontal: true, vertical: true)
       .multilineTextAlignment(.center)
-      .padding()
-      .frame(width: 100, height: 100)
+      .lineLimit(1)
+      .minimumScaleFactor(0.5)
+      .padding(8)
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .aspectRatio(1, contentMode: .fill)
       .foregroundStyle(.black)
       .bold()
-      .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(Color.white))
+      .background(
+        RoundedRectangle(
+          cornerSize: CGSize(width: 10, height: 10)
+        )
+        .fill(Color.white)
+        .fill(
+          Color(
+            .displayP3,
+            red: 239/256,
+            green: 238/256,
+            blue: 231/256
+          )
+        )
+      )
   }
 }
 
@@ -87,10 +102,10 @@ struct GuessView: View {
 
 struct GameView: View {
   let cols = [
-    GridItem(.fixed(100), spacing: 10),
-    GridItem(.fixed(100), spacing: 10),
-    GridItem(.fixed(100), spacing: 10),
-    GridItem(.fixed(100), spacing: 10)
+    GridItem(.flexible(), spacing: 8),
+    GridItem(.flexible(), spacing: 8),
+    GridItem(.flexible(), spacing: 8),
+    GridItem(.flexible(), spacing: 8)
   ]
   var game: Game
   
@@ -135,9 +150,9 @@ struct GameView: View {
 #Preview {
   let gameData = GameData.from(json: "{\"id\":150,\"groups\":{\"DOCTORS’ ORDERS\":{\"level\":0,\"members\":[\"DIET\",\"EXERCISE\",\"FRESH AIR\",\"SLEEP\"]},\"EMAIL ACTIONS\":{\"level\":1,\"members\":[\"COMPOSE\",\"FORWARD\",\"REPLY ALL\",\"SEND\"]},\"PODCASTS\":{\"level\":2,\"members\":[\"RADIOLAB\",\"SERIAL\",\"UP FIRST\",\"WTF\"]},\"___ COMEDY\":{\"level\":3,\"members\":[\"BLACK\",\"DIVINE\",\"PROP\",\"SKETCH\"]}},\"startingGroups\":[[\"COMPOSE\",\"DIVINE\",\"EXERCISE\",\"SEND\"],[\"FRESH AIR\",\"FORWARD\",\"SERIAL\",\"SKETCH\"],[\"WTF\",\"PROP\",\"UP FIRST\",\"DIET\"],[\"BLACK\",\"RADIOLAB\",\"SLEEP\",\"REPLY ALL\"]]}")
   var game = Game.from(gameData: gameData)
-  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
-  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
-  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
-  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
+//  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
+//  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
+  //  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
+  //  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
   return GameView(game: game)
 }
