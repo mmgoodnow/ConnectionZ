@@ -60,13 +60,18 @@ struct CompletedGroup: View {
   
   var body: some View {
     VStack {
-      Text(group.name).font(.title).bold().foregroundStyle(.black)
+      Text(group.name).font(.title2).bold().foregroundStyle(.black)
       Text(group.words.sorted().joined(separator: ", ")).foregroundStyle(.black)
     }
-    .frame(width: 430, height: 100)
-    .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(color()))
-    .foregroundStyle(.white)
-    
+    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+    .aspectRatio(4, contentMode: .fit)
+    .background(
+      RoundedRectangle(
+        cornerSize: CGSize(
+          width: 10,
+          height: 10
+        )
+      ).fill(color()))
   }
 }
 
@@ -95,7 +100,7 @@ struct GuessView: View {
   
   var body: some View {
     GridRow {
-      Label(guess.words.sorted().joined(separator: ", "), systemImage: icon).font(.headline)
+      Label(guess.words.sorted().joined(separator: ", "), systemImage: icon)
     }
   }
 }
@@ -112,6 +117,12 @@ struct GameView: View {
   var body: some View {
     VStack {
       Text("Create four groups of four!").font(.title2)
+      Grid(alignment: .leading) {
+        ForEach(Array(game.guesses.enumerated()), id: \.offset) {
+          i, guess in
+          GuessView(i: i, guess: guess)
+        }
+      }.padding(.vertical)
       CompletedGroups(groups: game.foundGroups)
       LazyVGrid(columns: cols, content: {
         ReorderableForEach(items: game.words) { word in
@@ -126,7 +137,7 @@ struct GameView: View {
             Text("Complete!").font(.largeTitle)
             Button("Copy Results") {
               copyToClipboard(game.emojis())
-            }
+            }.buttonStyle(.bordered)
           }
         } else {
           Button("Guess Top Row") {
@@ -136,13 +147,7 @@ struct GameView: View {
             game.shuffle()
           }.buttonStyle(.bordered)
         }
-      }.padding()
-      Grid(alignment: .leading) {
-        ForEach(Array(game.guesses.enumerated()), id: \.offset) {
-          i, guess in
-          GuessView(i: i, guess: guess)
-        }
-      }.padding()
+      }.padding(.vertical)
     }.padding()
   }
 }
@@ -152,7 +157,7 @@ struct GameView: View {
   var game = Game.from(gameData: gameData)
 //  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
 //  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
-  //  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
-  //  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
+//  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
+//  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
   return GameView(game: game)
 }

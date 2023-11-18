@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		511E55332B05DB7C003743F5 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511E55322B05DB7C003743F5 /* Clipboard.swift */; };
-		511E55352B071BF7003743F5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511E55342B071BF7003743F5 /* Colors.swift */; };
 		512C38232AFCA51E0072D104 /* DraggableConnectionsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512C38222AFCA51E0072D104 /* DraggableConnectionsApp.swift */; };
 		512C38252AFCA51E0072D104 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512C38242AFCA51E0072D104 /* ContentView.swift */; };
 		512C38292AFCA51F0072D104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C38282AFCA51F0072D104 /* Assets.xcassets */; };
@@ -23,7 +22,6 @@
 
 /* Begin PBXFileReference section */
 		511E55322B05DB7C003743F5 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
-		511E55342B071BF7003743F5 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		512C381F2AFCA51E0072D104 /* DraggableConnections.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DraggableConnections.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		512C38222AFCA51E0072D104 /* DraggableConnectionsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableConnectionsApp.swift; sourceTree = "<group>"; };
 		512C38242AFCA51E0072D104 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 				512C382A2AFCA51F0072D104 /* DraggableConnections.entitlements */,
 				512C382E2AFCA51F0072D104 /* Info.plist */,
 				512C382B2AFCA51F0072D104 /* Preview Content */,
-				511E55342B071BF7003743F5 /* Colors.swift */,
 			);
 			path = DraggableConnections;
 			sourceTree = "<group>";
@@ -192,7 +189,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */,
-				511E55352B071BF7003743F5 /* Colors.swift in Sources */,
 				5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */,
 				511E55332B05DB7C003743F5 /* Clipboard.swift in Sources */,
 				5154EAC62AFF089E007C24B2 /* Game.swift in Sources */,
