@@ -13,10 +13,31 @@ struct GroupData: Codable {
   let members: [String]
 }
 
-struct GameData: Codable, Identifiable {
+func gameIdFor(date: Date) -> Int {
+  var dateComponents = DateComponents()
+  dateComponents.year = 2023
+  dateComponents.month = 6
+  dateComponents.day = 12
+  let gameZero = Calendar(identifier: .gregorian).date(from: dateComponents)!
+  return Calendar.current.dateComponents([.day], from: gameZero , to: date).day!
+}
+
+struct GameData: Codable, Identifiable, Hashable {
+  static func == (lhs: GameData, rhs: GameData) -> Bool {
+    return lhs.id == rhs.id
+  }
+
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(self.id)
+  }
+  
   let id: Int
   let groups: Dictionary<String, GroupData>
   let startingGroups: [[String]]
+  var name: String {
+    return "Puzzle #\(id + 1)"
+  }
   
   func toJsonString() -> String {
     let encoder = JSONEncoder()
