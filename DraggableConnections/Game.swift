@@ -35,6 +35,7 @@ struct GameData: Codable, Identifiable, Hashable {
   let id: Int
   let groups: Dictionary<String, GroupData>
   let startingGroups: [[String]]
+  
   var name: String {
     return "Puzzle #\(id + 1)"
   }
@@ -106,6 +107,10 @@ struct GameData: Codable, Identifiable, Hashable {
     self.groups = groups
   }
   
+  var name: String {
+    return "Puzzle #\(id + 1)"
+  }
+  
   var foundGroups: [Group] {
     let correctGuesses = guesses.filter{ guess in return guess.score == 4}
     return correctGuesses.map { guess in
@@ -162,6 +167,6 @@ struct GameData: Codable, Identifiable, Hashable {
         self.groups.first { $0.words.contains(word) }!.emoji()
       }.joined(separator: "")
     }.joined(separator: "\n")
-    return "ConnectionZ\nPuzzle #\(self.id)\n\(emojis)"
+    return ["ConnectionZ", self.name, emojis].joined(separator: "\n")
   }
 }
