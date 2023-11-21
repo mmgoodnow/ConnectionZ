@@ -36,10 +36,6 @@ struct GameData: Codable, Identifiable, Hashable {
   let groups: Dictionary<String, GroupData>
   let startingGroups: [[String]]
   
-  var name: String {
-    return "Puzzle #\(id + 1)"
-  }
-  
   func toJsonString() -> String {
     let encoder = JSONEncoder()
     encoder.outputFormatting = .prettyPrinted
@@ -52,21 +48,10 @@ struct GameData: Codable, Identifiable, Hashable {
   }
 }
 
-@Observable class Group: Identifiable {
+struct Group: Codable {
   let name: String
   let level: Int
   let words: Set<String>
-  var found = false
-  
-  var id: String {
-    return name
-  }
-  
-  init(name: String, level: Int, words: Set<String>) {
-    self.name = name
-    self.level = level
-    self.words = Set(words)
-  }
   
   func emoji() -> String {
     switch (level) {
@@ -83,7 +68,7 @@ struct GameData: Codable, Identifiable, Hashable {
   }
 }
 
-@Observable class Guess: Identifiable {
+struct Guess: Codable {
   let words: Set<String>
   let score: Int
   
@@ -95,7 +80,7 @@ struct GameData: Codable, Identifiable, Hashable {
   }
 }
 
-@Observable class Game: Identifiable {
+@Model class Game {
   let id: Int
   var words: [String]
   let groups: [Group]
@@ -126,12 +111,12 @@ struct GameData: Codable, Identifiable, Hashable {
     return self.words.isEmpty
   }
   
-  static func from(gameData: GameData) -> Game {
+  convenience init(from gameData: GameData) {
     let words = gameData.startingGroups.flatMap {$0}
     let groups = gameData.groups.map { (groupName, groupData) in
       return Group(name: groupName, level: groupData.level, words: Set(groupData.members))
     }
-    return Game(id: gameData.id, words: words, groups: groups)
+    self.init(id: gameData.id, words: words, groups: groups)
   }
   
   func guess(words candidates: Set<String>) -> Void {
@@ -146,7 +131,6 @@ struct GameData: Codable, Identifiable, Hashable {
     }
     
     if closestGroup.score(of: candidates) == 4 {
-      closestGroup.found = true;
       self.words = self.words.filter { !closestGroup.words.contains($0) }
     }
     

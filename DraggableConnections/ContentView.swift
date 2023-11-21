@@ -24,22 +24,26 @@ public extension Color {
 
 struct ContentView: View {
   @State var isFetching = false
-  @State var allGames = [GameData]()
-  @State private var selection: GameData? = nil
-  @Environment(\.colorScheme) var colorScheme
+  @State private var selection: Game? = nil
+  @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.modelContext) private var modelContext
+  @Query(sort: \Game.id) private var persistedGames: [Game]
 
   var body: some View {
     NavigationSplitView {
       if isFetching {
         ProgressView()
       } else {
-        List(allGames, id: \.self, selection: $selection) { gameData in
+        List(persistedGames, selection: $selection) { gameData in
           NavigationLink(gameData.name, value: gameData)
         }
       }
     } detail: {
-      if let gameData = selection {
-        GameView(game: Game.from(gameData: gameData)).navigationTitle(gameData.name)
+      if let game = selection {
+        GameView(game: game)
+          .navigationTitle(game.name)
+          .frame(minWidth: 300, maxWidth: 1000, minHeight: 400, maxHeight: 1000)
+          .aspectRatio(3/4, contentMode: .fit)
       } else {
         ProgressView {
           Text("Loading games from NYT servers")
@@ -53,15 +57,16 @@ struct ContentView: View {
   private func loadItems() {
     self.isFetching = true;
     Task {
-      self.allGames = await ConnectionsApi.fetchAllConnectionsGames()
+      let persistedIds = Set(self.persistedGames.map(\.id))
+      let gameDatasFromServer = await ConnectionsApi.fetchAllConnectionsGames()
+      
+      for gameData in gameDatasFromServer {
+        if (!persistedIds.contains(gameData.id)) {
+          modelContext.insert(Game(from: gameData))
+        }
+      }
       self.isFetching = false;
-      self.selection = allGames.first(where: { $0.id == gameIdFor(date: Date())})
-    }
-  }
-  
-  private func deleteItems(offsets: IndexSet) {
-    withAnimation {
-      allGames.remove(atOffsets: offsets)
+      self.selection = self.persistedGames.first(where: { $0.id == gameIdFor(date: Date())})
     }
   }
 }
