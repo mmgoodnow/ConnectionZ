@@ -10,7 +10,6 @@ import SwiftData
 import SwiftSoup
 
 public extension Color {
-  
 #if os(macOS)
   static let background = Color(NSColor.windowBackgroundColor)
   static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
@@ -29,14 +28,26 @@ struct ContentView: View {
   @Environment(\.modelContext) private var modelContext
   @Query(sort: \Game.id) private var persistedGames: [Game]
   
+  func game(for date: Date) -> Game {
+    return self.persistedGames.first { $0.id == Game.id(for: date)}!
+  }
+  
   var body: some View {
     NavigationSplitView {
       if persistedGames.isEmpty {
-        ProgressView()
+        ProgressView().navigationTitle("ConnectionZ")
       } else {
-        List(persistedGames, selection: $selection) { gameData in
-          NavigationLink(gameData.name, value: gameData)
-        }
+        List(selection: $selection) {
+          Section(header: Text("Current")) {
+            NavigationLink("Today's Game", value: game(for: Date()))
+            NavigationLink("Yesterday's Game", value: game(for: Date().add(days: -1)))
+          }
+          Section(header: Text("Archive")) {
+            ForEach(persistedGames) { game in
+              NavigationLink(game.name, value: game)
+            }
+          }
+        }.navigationTitle("ConnectionZ")
       }
     } detail: {
       if let game = selection {
@@ -64,7 +75,7 @@ struct ContentView: View {
           modelContext.insert(Game(from: gameData))
         }
       }
-      self.selection = self.persistedGames.first(where: { $0.id == gameIdFor(date: Date())})
+      self.selection = self.persistedGames.first(where: { $0.id == Game.id(for: Date())})
     }
   }
 }

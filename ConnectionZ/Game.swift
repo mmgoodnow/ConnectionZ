@@ -8,37 +8,6 @@
 import Foundation
 import SwiftData
 
-struct GroupData: Codable {
-  let level: Int
-  let members: [String]
-}
-
-func gameIdFor(date: Date) -> Int {
-  var dateComponents = DateComponents()
-  dateComponents.year = 2023
-  dateComponents.month = 6
-  dateComponents.day = 12
-  let gameZero = Calendar(identifier: .gregorian).date(from: dateComponents)!
-  return Calendar.current.dateComponents([.day], from: gameZero , to: date).day!
-}
-
-struct GameData: Codable {
-  let id: Int
-  let groups: Dictionary<String, GroupData>
-  let startingGroups: [[String]]
-  
-  func toJsonString() -> String {
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = .prettyPrinted
-    let data = try! encoder.encode(self)
-    return String(data: data, encoding: .utf8)!
-  }
-  
-  init(json: String) {
-    self = try! JSONDecoder().decode(GameData.self, from: json.data(using: .utf8)!)
-  }
-}
-
 struct Group: Codable {
   let name: String
   let level: Int
@@ -94,7 +63,7 @@ struct Guess: Codable {
   var name: String {
     return "Puzzle #\(id + 1)"
   }
-  
+
   var foundGroups: [Group] {
     let correctGuesses = guesses.filter{ guess in return guess.score == 4}
     return correctGuesses.map { guess in
