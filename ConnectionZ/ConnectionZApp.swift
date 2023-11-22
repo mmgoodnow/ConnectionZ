@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct DraggableConnectionsApp: App {
+struct ConnectionZApp: App {
     var sharedModelContainer: ModelContainer = {
       let schema = Schema([Game.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)

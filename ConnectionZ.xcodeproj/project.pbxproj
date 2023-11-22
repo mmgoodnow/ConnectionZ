@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		511E55332B05DB7C003743F5 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511E55322B05DB7C003743F5 /* Clipboard.swift */; };
-		512C38232AFCA51E0072D104 /* DraggableConnectionsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512C38222AFCA51E0072D104 /* DraggableConnectionsApp.swift */; };
+		512C38232AFCA51E0072D104 /* ConnectionZApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512C38222AFCA51E0072D104 /* ConnectionZApp.swift */; };
 		512C38252AFCA51E0072D104 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512C38242AFCA51E0072D104 /* ContentView.swift */; };
 		512C38292AFCA51F0072D104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C38282AFCA51F0072D104 /* Assets.xcassets */; };
 		512C382D2AFCA51F0072D104 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C382C2AFCA51F0072D104 /* Preview Assets.xcassets */; };
@@ -22,8 +22,8 @@
 
 /* Begin PBXFileReference section */
 		511E55322B05DB7C003743F5 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
-		512C381F2AFCA51E0072D104 /* DraggableConnections.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DraggableConnections.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		512C38222AFCA51E0072D104 /* DraggableConnectionsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableConnectionsApp.swift; sourceTree = "<group>"; };
+		512C381F2AFCA51E0072D104 /* ConnectionZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConnectionZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		512C38222AFCA51E0072D104 /* ConnectionZApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionZApp.swift; sourceTree = "<group>"; };
 		512C38242AFCA51E0072D104 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		512C38282AFCA51F0072D104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		512C382A2AFCA51F0072D104 /* DraggableConnections.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DraggableConnections.entitlements; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		512C38162AFCA51E0072D104 = {
 			isa = PBXGroup;
 			children = (
-				512C38212AFCA51E0072D104 /* DraggableConnections */,
+				512C38212AFCA51E0072D104 /* ConnectionZ */,
 				512C38202AFCA51E0072D104 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,17 +59,17 @@
 		512C38202AFCA51E0072D104 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				512C381F2AFCA51E0072D104 /* DraggableConnections.app */,
+				512C381F2AFCA51E0072D104 /* ConnectionZ.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		512C38212AFCA51E0072D104 /* DraggableConnections */ = {
+		512C38212AFCA51E0072D104 /* ConnectionZ */ = {
 			isa = PBXGroup;
 			children = (
 				5154EAC92B0015C0007C24B2 /* Item.swift */,
 				511E55322B05DB7C003743F5 /* Clipboard.swift */,
-				512C38222AFCA51E0072D104 /* DraggableConnectionsApp.swift */,
+				512C38222AFCA51E0072D104 /* ConnectionZApp.swift */,
 				512C38242AFCA51E0072D104 /* ContentView.swift */,
 				5154EAC52AFF089E007C24B2 /* Game.swift */,
 				5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */,
@@ -80,7 +80,7 @@
 				512C382E2AFCA51F0072D104 /* Info.plist */,
 				512C382B2AFCA51F0072D104 /* Preview Content */,
 			);
-			path = DraggableConnections;
+			path = ConnectionZ;
 			sourceTree = "<group>";
 		};
 		512C382B2AFCA51F0072D104 /* Preview Content */ = {
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		512C381E2AFCA51E0072D104 /* DraggableConnections */ = {
+		512C381E2AFCA51E0072D104 /* ConnectionZ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 512C38312AFCA51F0072D104 /* Build configuration list for PBXNativeTarget "DraggableConnections" */;
+			buildConfigurationList = 512C38312AFCA51F0072D104 /* Build configuration list for PBXNativeTarget "ConnectionZ" */;
 			buildPhases = (
 				51098AD72AFEE35A0002B2A0 /* ShellScript */,
 				512C381B2AFCA51E0072D104 /* Sources */,
@@ -107,12 +107,12 @@
 			);
 			dependencies = (
 			);
-			name = DraggableConnections;
+			name = ConnectionZ;
 			packageProductDependencies = (
 				5154EAC12AFEEC74007C24B2 /* SwiftSoup */,
 			);
 			productName = DraggableConnections;
-			productReference = 512C381F2AFCA51E0072D104 /* DraggableConnections.app */;
+			productReference = 512C381F2AFCA51E0072D104 /* ConnectionZ.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -146,7 +146,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				512C381E2AFCA51E0072D104 /* DraggableConnections */,
+				512C381E2AFCA51E0072D104 /* ConnectionZ */,
 			);
 		};
 /* End PBXProject section */
@@ -193,7 +193,7 @@
 				511E55332B05DB7C003743F5 /* Clipboard.swift in Sources */,
 				5154EAC62AFF089E007C24B2 /* Game.swift in Sources */,
 				512C38252AFCA51E0072D104 /* ContentView.swift in Sources */,
-				512C38232AFCA51E0072D104 /* DraggableConnectionsApp.swift in Sources */,
+				512C38232AFCA51E0072D104 /* ConnectionZApp.swift in Sources */,
 				5154EACA2B0015C0007C24B2 /* Item.swift in Sources */,
 				5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */,
 			);
@@ -412,7 +412,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		512C38312AFCA51F0072D104 /* Build configuration list for PBXNativeTarget "DraggableConnections" */ = {
+		512C38312AFCA51F0072D104 /* Build configuration list for PBXNativeTarget "ConnectionZ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				512C38322AFCA51F0072D104 /* Debug */,
