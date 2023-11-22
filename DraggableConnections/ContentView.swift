@@ -10,16 +10,16 @@ import SwiftData
 import SwiftSoup
 
 public extension Color {
-
-    #if os(macOS)
-    static let background = Color(NSColor.windowBackgroundColor)
-    static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
-    static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
-    #else
-    static let background = Color(UIColor.systemBackground)
-    static let secondaryBackground = Color(UIColor.secondarySystemBackground)
-    static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
-    #endif
+  
+#if os(macOS)
+  static let background = Color(NSColor.windowBackgroundColor)
+  static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
+  static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
+#else
+  static let background = Color(UIColor.systemBackground)
+  static let secondaryBackground = Color(UIColor.secondarySystemBackground)
+  static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
+#endif
 }
 
 struct ContentView: View {
@@ -28,10 +28,10 @@ struct ContentView: View {
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.modelContext) private var modelContext
   @Query(sort: \Game.id) private var persistedGames: [Game]
-
+  
   var body: some View {
     NavigationSplitView {
-      if isFetching {
+      if persistedGames.isEmpty {
         ProgressView()
       } else {
         List(persistedGames, selection: $selection) { gameData in
@@ -55,7 +55,6 @@ struct ContentView: View {
   }
   
   private func loadItems() {
-    self.isFetching = true;
     Task {
       let persistedIds = Set(self.persistedGames.map(\.id))
       let gameDatasFromServer = await ConnectionsApi.fetchAllConnectionsGames()
@@ -65,7 +64,6 @@ struct ContentView: View {
           modelContext.insert(Game(from: gameData))
         }
       }
-      self.isFetching = false;
       self.selection = self.persistedGames.first(where: { $0.id == gameIdFor(date: Date())})
     }
   }

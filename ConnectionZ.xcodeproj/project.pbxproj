@@ -130,7 +130,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 512C381A2AFCA51E0072D104 /* Build configuration list for PBXProject "DraggableConnections" */;
+			buildConfigurationList = 512C381A2AFCA51E0072D104 /* Build configuration list for PBXProject "ConnectionZ" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -258,6 +258,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -312,6 +313,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -401,7 +403,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		512C381A2AFCA51E0072D104 /* Build configuration list for PBXProject "DraggableConnections" */ = {
+		512C381A2AFCA51E0072D104 /* Build configuration list for PBXProject "ConnectionZ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				512C382F2AFCA51F0072D104 /* Debug */,

@@ -22,16 +22,7 @@ func gameIdFor(date: Date) -> Int {
   return Calendar.current.dateComponents([.day], from: gameZero , to: date).day!
 }
 
-struct GameData: Codable, Identifiable, Hashable {
-  static func == (lhs: GameData, rhs: GameData) -> Bool {
-    return lhs.id == rhs.id
-  }
-
-  
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(self.id)
-  }
-  
+struct GameData: Codable {
   let id: Int
   let groups: Dictionary<String, GroupData>
   let startingGroups: [[String]]
@@ -43,8 +34,8 @@ struct GameData: Codable, Identifiable, Hashable {
     return String(data: data, encoding: .utf8)!
   }
   
-  static func from(json: String) -> GameData {
-    return try! JSONDecoder().decode(GameData.self, from: json.data(using: .utf8)!)
+  init(json: String) {
+    self = try! JSONDecoder().decode(GameData.self, from: json.data(using: .utf8)!)
   }
 }
 
@@ -92,6 +83,14 @@ struct Guess: Codable {
     self.groups = groups
   }
   
+  convenience init(from gameData: GameData) {
+    let words = gameData.startingGroups.flatMap {$0}
+    let groups = gameData.groups.map { (groupName, groupData) in
+      return Group(name: groupName, level: groupData.level, words: Set(groupData.members))
+    }
+    self.init(id: gameData.id, words: words, groups: groups)
+  }
+  
   var name: String {
     return "Puzzle #\(id + 1)"
   }
@@ -111,12 +110,13 @@ struct Guess: Codable {
     return self.words.isEmpty
   }
   
-  convenience init(from gameData: GameData) {
-    let words = gameData.startingGroups.flatMap {$0}
-    let groups = gameData.groups.map { (groupName, groupData) in
-      return Group(name: groupName, level: groupData.level, words: Set(groupData.members))
-    }
-    self.init(id: gameData.id, words: words, groups: groups)
+  var emojis: String {
+    let emojis = guesses.map { guess in
+      guess.words.sorted().map { word in
+        self.groups.first { $0.words.contains(word) }!.emoji()
+      }.joined(separator: "")
+    }.joined(separator: "\n")
+    return ["ConnectionZ", self.name, emojis].joined(separator: "\n")
   }
   
   func guess(words candidates: Set<String>) -> Void {
@@ -145,12 +145,7 @@ struct Guess: Codable {
     self.words.shuffle()
   }
   
-  func emojis() -> String {
-    let emojis = guesses.map { guess in
-      guess.words.sorted().map { word in
-        self.groups.first { $0.words.contains(word) }!.emoji()
-      }.joined(separator: "")
-    }.joined(separator: "\n")
-    return ["ConnectionZ", self.name, emojis].joined(separator: "\n")
+  func reset() {
+    self.guesses.removeAll()
   }
 }
