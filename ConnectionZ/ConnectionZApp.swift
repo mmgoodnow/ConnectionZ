@@ -8,23 +8,30 @@
 import SwiftUI
 import SwiftData
 
+private func createModelContainer() -> ModelContainer {
+  let schema = Schema([Game.self])
+  let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+  
+  do {
+    return try ModelContainer(for: schema, configurations: [modelConfiguration])
+  } catch {
+    fatalError("Could not create ModelContainer: \(error)")
+  }
+}
+
 @main
 struct ConnectionZApp: App {
-    var sharedModelContainer: ModelContainer = {
-      let schema = Schema([Game.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        .modelContainer(sharedModelContainer)
+  let sharedModelContainer: ModelContainer
+  let backgroundImporter: BackgroundImporter
+  init() {
+    self.sharedModelContainer = createModelContainer()
+    self.backgroundImporter = BackgroundImporter(modelContainer: sharedModelContainer)
+  }
+  
+  var body: some Scene {
+    WindowGroup {
+      ContentView(backgroundImporter: backgroundImporter)
     }
+    .modelContainer(sharedModelContainer)
+  }
 }

@@ -22,13 +22,25 @@ public extension Color {
 }
 
 struct ContentView: View {
-  @State var isFetching = false
-  @State private var selection: Game? = nil
+  let backgroundImporter: BackgroundImporter
+  
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.modelContext) private var modelContext
+  @State private var selection: Game? = nil
+  
   @Query(sort: \Game.id) private var persistedGames: [Game]
   
-  func game(for date: Date) -> Game {
+  init(backgroundImporter: BackgroundImporter) {
+    self.backgroundImporter = backgroundImporter
+  }
+  
+  private func loadItems() {
+    Task { [backgroundImporter] in
+      await backgroundImporter.synchronizeWithServer()
+    }
+  }
+  
+  private func game(for date: Date) -> Game {
     return self.persistedGames.first { $0.id == Game.id(for: date)}!
   }
   
@@ -63,20 +75,6 @@ struct ContentView: View {
     }
     .onAppear(perform: loadItems)
     .background(colorScheme == .dark ? Color.background : Color.white)
-  }
-  
-  private func loadItems() {
-    Task {
-      let persistedIds = Set(self.persistedGames.map(\.id))
-      let gameDatasFromServer = await ConnectionsApi.fetchAllConnectionsGames()
-      
-      for gameData in gameDatasFromServer {
-        if (!persistedIds.contains(gameData.id)) {
-          modelContext.insert(Game(from: gameData))
-        }
-      }
-      self.selection = self.persistedGames.first(where: { $0.id == Game.id(for: Date())})
-    }
   }
 }
 
