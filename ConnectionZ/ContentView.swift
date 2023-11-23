@@ -44,6 +44,10 @@ struct ContentView: View {
     return self.persistedGames.first { $0.id == Game.id(for: date)}!
   }
   
+  var inProgressGames: [Game] {
+    return persistedGames.filter(\.isInProgress)
+  }
+  
   var body: some View {
     NavigationSplitView {
       if persistedGames.isEmpty {
@@ -53,6 +57,13 @@ struct ContentView: View {
           Section(header: Text("Current")) {
             NavigationLink("Today's Game", value: game(for: Date()))
             NavigationLink("Yesterday's Game", value: game(for: Date().add(days: -1)))
+          }
+          if (!inProgressGames.isEmpty) {
+            Section(header: Text("In Progress")) {
+              ForEach(inProgressGames) { game in
+                NavigationLink(game.name, value: game)
+              }
+            }
           }
           Section(header: Text("Archive")) {
             ForEach(persistedGames) { game in

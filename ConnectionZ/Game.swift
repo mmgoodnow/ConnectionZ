@@ -79,6 +79,10 @@ struct Guess: Codable {
     return self.words.isEmpty
   }
   
+  var isInProgress: Bool {
+    return !self.guesses.isEmpty && !self.isComplete
+  }
+  
   var emojis: String {
     let emojis = guesses.map { guess in
       guess.words.sorted().map { word in
