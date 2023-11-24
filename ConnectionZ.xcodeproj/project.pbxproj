@@ -16,11 +16,11 @@
 		5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */; };
 		5154EAC62AFF089E007C24B2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC52AFF089E007C24B2 /* Game.swift */; };
 		5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC72AFFECAD007C24B2 /* GameView.swift */; };
-		5154EACA2B0015C0007C24B2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC92B0015C0007C24B2 /* Item.swift */; };
 		5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */; };
 		51D1B2F22B0E8B4B0033BD25 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F12B0E8B4B0033BD25 /* GameData.swift */; };
 		51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F32B0E8FE00033BD25 /* Dates.swift */; };
 		51D1B2F62B0EA7450033BD25 /* BackgroundImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F52B0EA7450033BD25 /* BackgroundImporter.swift */; };
+		51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,11 +34,11 @@
 		5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsApi.swift; sourceTree = "<group>"; };
 		5154EAC52AFF089E007C24B2 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		5154EAC72AFFECAD007C24B2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		5154EAC92B0015C0007C24B2 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		51D1B2F12B0E8B4B0033BD25 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		51D1B2F32B0E8FE00033BD25 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		51D1B2F52B0EA7450033BD25 /* BackgroundImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImporter.swift; sourceTree = "<group>"; };
+		51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGroupingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,15 +72,15 @@
 		512C38212AFCA51E0072D104 /* ConnectionZ */ = {
 			isa = PBXGroup;
 			children = (
-				5154EAC92B0015C0007C24B2 /* Item.swift */,
-				511E55322B05DB7C003743F5 /* Clipboard.swift */,
-				512C38222AFCA51E0072D104 /* ConnectionZApp.swift */,
-				512C38242AFCA51E0072D104 /* ContentView.swift */,
 				51D1B2F12B0E8B4B0033BD25 /* GameData.swift */,
 				5154EAC52AFF089E007C24B2 /* Game.swift */,
 				51D1B2F32B0E8FE00033BD25 /* Dates.swift */,
-				5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */,
+				512C38242AFCA51E0072D104 /* ContentView.swift */,
+				51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */,
 				5154EAC72AFFECAD007C24B2 /* GameView.swift */,
+				512C38222AFCA51E0072D104 /* ConnectionZApp.swift */,
+				511E55322B05DB7C003743F5 /* Clipboard.swift */,
+				5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */,
 				5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */,
 				512C38282AFCA51F0072D104 /* Assets.xcassets */,
 				512C382E2AFCA51F0072D104 /* Info.plist */,
@@ -196,13 +196,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */,
+				51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */,
 				51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */,
 				5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */,
 				511E55332B05DB7C003743F5 /* Clipboard.swift in Sources */,
 				5154EAC62AFF089E007C24B2 /* Game.swift in Sources */,
 				512C38252AFCA51E0072D104 /* ContentView.swift in Sources */,
 				512C38232AFCA51E0072D104 /* ConnectionZApp.swift in Sources */,
-				5154EACA2B0015C0007C24B2 /* Item.swift in Sources */,
 				51D1B2F22B0E8B4B0033BD25 /* GameData.swift in Sources */,
 				5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */,
 				51D1B2F62B0EA7450033BD25 /* BackgroundImporter.swift in Sources */,

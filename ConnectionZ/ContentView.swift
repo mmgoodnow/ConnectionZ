@@ -21,12 +21,18 @@ public extension Color {
 #endif
 }
 
+extension Array where Element: Game {
+  subscript(id: Int) -> Game? {
+    first { $0.id == id }
+  }
+}
+
 struct ContentView: View {
   let backgroundImporter: BackgroundImporter
   
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.modelContext) private var modelContext
-  @State private var selection: Game? = nil
+  @SceneStorage("ContentView.selectedId") private var selectedId: Int?
   
   @Query(sort: \Game.id) private var persistedGames: [Game]
   
@@ -34,18 +40,24 @@ struct ContentView: View {
     self.backgroundImporter = backgroundImporter
   }
   
-  private func loadItems() {
+  private func onAppear() {
+    if selectedId == nil {
+      if let todaysGame = game(for: Date()) {
+        selectedId = selectedId ?? todaysGame.id
+      }
+    }
     Task { [backgroundImporter] in
       await backgroundImporter.synchronizeWithServer()
+      if selectedId == nil {
+        if let todaysGame = game(for: Date()) {
+          selectedId = selectedId ?? todaysGame.id
+        }
+      }
     }
   }
   
-  private func game(for date: Date) -> Game {
-    return self.persistedGames.first { $0.id == Game.id(for: date)}!
-  }
-  
-  var inProgressGames: [Game] {
-    return persistedGames.filter(\.isInProgress)
+  private func game(for date: Date) -> Game? {
+    return self.persistedGames.first { $0.id == Game.id(for: date)}
   }
   
   var body: some View {
@@ -53,29 +65,24 @@ struct ContentView: View {
       if persistedGames.isEmpty {
         ProgressView().navigationTitle("ConnectionZ")
       } else {
-        List(selection: $selection) {
+        List(selection: $selectedId) {
           Section(header: Text("Current")) {
-            NavigationLink("Today's Game", value: game(for: Date()))
-            NavigationLink("Yesterday's Game", value: game(for: Date().add(days: -1)))
+            NavigationLink("Today's Game", value: game(for: Date())?.id ?? 0)
+            NavigationLink("Yesterday's Game", value: game(for: Date().add(days: -1))?.id ?? 0)
           }
-          if (!inProgressGames.isEmpty) {
-            Section(header: Text("In Progress")) {
-              ForEach(inProgressGames) { game in
-                NavigationLink(game.name, value: game)
-              }
-            }
-          }
-          Section(header: Text("Archive")) {
-            ForEach(persistedGames) { game in
-              NavigationLink(game.name, value: game)
-            }
-          }
+          GameGroupingView(sectionName: "In Progress", games: persistedGames.filter(\.isInProgress))
+          GameGroupingView(sectionName: "Completed", games: persistedGames.filter(\.isComplete))
+          GameGroupingView(
+            sectionName: "Archive",
+            games: persistedGames.filter(\.isPublished).reversed(),
+            startCollapsed: true
+          )
         }.navigationTitle("ConnectionZ")
       }
     } detail: {
-      if let game = selection {
-        GameView(game: game)
-          .navigationTitle(game.name)
+      if let id = selectedId {
+        GameView(game: persistedGames[id])
+          .navigationTitle(persistedGames[id].name)
           .frame(minWidth: 300, maxWidth: 1000, minHeight: 400, maxHeight: 1000)
           .aspectRatio(3/4, contentMode: .fit)
       } else {
@@ -84,7 +91,7 @@ struct ContentView: View {
         }
       }
     }
-    .onAppear(perform: loadItems)
+    .onAppear(perform: onAppear)
     .background(colorScheme == .dark ? Color.background : Color.white)
   }
 }

@@ -64,7 +64,6 @@ struct CompletedGroup: View {
       Text(group.words.sorted().joined(separator: ", ")).foregroundStyle(.black)
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-    .aspectRatio(4, contentMode: .fit)
     .background(
       RoundedRectangle(
         cornerSize: CGSize(
@@ -123,14 +122,16 @@ struct GameView: View {
           GuessView(i: i, guess: guess)
         }
       }.padding(.vertical)
-      CompletedGroups(groups: game.foundGroups)
-      LazyVGrid(columns: cols, content: {
-        ReorderableForEach(items: game.words) { word in
-          Tile(word: word)
-        } moveAction: { from, to in
-          game.words.move(fromOffsets: from, toOffset: to)
-        }
-      })
+      VStack {
+        CompletedGroups(groups: game.foundGroups)
+        LazyVGrid(columns: cols, content: {
+          ReorderableForEach(items: game.words) { word in
+            Tile(word: word)
+          } moveAction: { from, to in
+            game.words.move(fromOffsets: from, toOffset: to)
+          }
+        })
+      }.aspectRatio(1, contentMode: .fit)
       HStack {
         if game.isComplete {
           VStack {
@@ -155,8 +156,8 @@ struct GameView: View {
 #Preview {
   let gameData = GameData(json: "{\"id\":150,\"groups\":{\"DOCTORS’ ORDERS\":{\"level\":0,\"members\":[\"DIET\",\"EXERCISE\",\"FRESH AIR\",\"SLEEP\"]},\"EMAIL ACTIONS\":{\"level\":1,\"members\":[\"COMPOSE\",\"FORWARD\",\"REPLY ALL\",\"SEND\"]},\"PODCASTS\":{\"level\":2,\"members\":[\"RADIOLAB\",\"SERIAL\",\"UP FIRST\",\"WTF\"]},\"___ COMEDY\":{\"level\":3,\"members\":[\"BLACK\",\"DIVINE\",\"PROP\",\"SKETCH\"]}},\"startingGroups\":[[\"COMPOSE\",\"DIVINE\",\"EXERCISE\",\"SEND\"],[\"FRESH AIR\",\"FORWARD\",\"SERIAL\",\"SKETCH\"],[\"WTF\",\"PROP\",\"UP FIRST\",\"DIET\"],[\"BLACK\",\"RADIOLAB\",\"SLEEP\",\"REPLY ALL\"]]}")
   var game = Game(from: gameData)
-//  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
-//  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
+  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
+  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
 //  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
 //  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
   return GameView(game: game)

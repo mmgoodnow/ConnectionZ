@@ -26,4 +26,8 @@ extension Game {
     let date = Gregorian.date(byAdding: .day, value: self.id, to: GAME_ZERO)!
     return Gregorian.startOfDay(for: date)
   }
+  
+  var isPublished: Bool {
+    return self.date < Date()
+  }
 }
