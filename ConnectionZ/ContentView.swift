@@ -41,18 +41,8 @@ struct ContentView: View {
   }
   
   private func onAppear() {
-    if selectedId == nil {
-      if let todaysGame = game(for: Date()) {
-        selectedId = selectedId ?? todaysGame.id
-      }
-    }
     Task { [backgroundImporter] in
       await backgroundImporter.synchronizeWithServer()
-      if selectedId == nil {
-        if let todaysGame = game(for: Date()) {
-          selectedId = selectedId ?? todaysGame.id
-        }
-      }
     }
   }
   
