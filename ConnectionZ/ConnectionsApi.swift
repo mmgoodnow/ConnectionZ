@@ -18,9 +18,9 @@ struct ConnectionsApi {
     return try! JSONDecoder().decode([GameData].self, from: json.data(using: .utf8)!)
   }
   
-  static func fetchAllConnectionsGames() async -> [GameData]  {
+  static func fetchAllConnectionsGames() async throws -> [GameData]  {
     let url = URL(string: "https://nytimes.com/games/connections")!
-    let (data, _) = try! await URLSession.shared.data(from: url)
+    let (data, _) = try await URLSession.shared.data(from: url)
     return self.parseGamesFromResponse(data: data);
   }
 }

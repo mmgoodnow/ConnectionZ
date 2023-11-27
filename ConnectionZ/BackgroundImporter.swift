@@ -19,7 +19,7 @@ actor BackgroundImporter {
     do {
       print("Syncing...")
       let modelContext = ModelContext(modelContainer)
-      let gameDatasFromServer = await ConnectionsApi.fetchAllConnectionsGames()
+      let gameDatasFromServer = try await ConnectionsApi.fetchAllConnectionsGames()
       
       let models = try modelContext.fetch(FetchDescriptor<Game>())
       let persistedIds = Set(models.map(\.id))

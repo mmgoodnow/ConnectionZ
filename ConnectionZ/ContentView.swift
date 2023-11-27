@@ -70,9 +70,13 @@ struct ContentView: View {
         }.navigationTitle("ConnectionZ")
       }
     } detail: {
+      let _ = print(selectedId);
       if let id = selectedId {
         GameView(game: persistedGames[id])
           .navigationTitle(persistedGames[id].name)
+#if os(iOS)
+          .navigationBarTitleDisplayMode(.inline)
+#endif
           .frame(minWidth: 300, maxWidth: 1000, minHeight: 400, maxHeight: 1000)
           .aspectRatio(3/4, contentMode: .fit)
       } else {

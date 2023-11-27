@@ -122,7 +122,7 @@ struct GameView: View {
             GuessView(i: i, guess: guess)
           }
         }
-      }.frame(maxWidth: .infinity, minHeight: 50, maxHeight: 100)
+      }.defaultScrollAnchor(.bottom)
       if game.isComplete {
         Text("Complete!").font(.title2)
       } else {
@@ -138,8 +138,9 @@ struct GameView: View {
           }
         })
       }
-      .aspectRatio(1, contentMode: .fill)
+      .aspectRatio(1, contentMode: .fit)
       .frame(minWidth: 300, minHeight: 300)
+      .layoutPriority(1)
       HStack {
         if game.isComplete {
           Button("Copy Results") {
@@ -147,13 +148,16 @@ struct GameView: View {
           }.buttonStyle(.bordered)
         } else {
           Button("Guess Top Row") {
-            game.guess(row: 0..<4)
+            withAnimation {
+              game.guess(row: 0..<4)
+            }
           }.buttonStyle(.bordered)
           Button("Shuffle") {
             game.shuffle()
           }.buttonStyle(.bordered)
         }
-      }.padding(.top)
+      }
+      .padding(.top)
     }.padding()
   }
 }
@@ -161,9 +165,11 @@ struct GameView: View {
 #Preview {
   let gameData = GameData(json: "{\"id\":150,\"groups\":{\"DOCTORS’ ORDERS\":{\"level\":0,\"members\":[\"DIET\",\"EXERCISE\",\"FRESH AIR\",\"SLEEP\"]},\"EMAIL ACTIONS\":{\"level\":1,\"members\":[\"COMPOSE\",\"FORWARD\",\"REPLY ALL\",\"SEND\"]},\"PODCASTS\":{\"level\":2,\"members\":[\"RADIOLAB\",\"SERIAL\",\"UP FIRST\",\"WTF\"]},\"___ COMEDY\":{\"level\":3,\"members\":[\"BLACK\",\"DIVINE\",\"PROP\",\"SKETCH\"]}},\"startingGroups\":[[\"COMPOSE\",\"DIVINE\",\"EXERCISE\",\"SEND\"],[\"FRESH AIR\",\"FORWARD\",\"SERIAL\",\"SKETCH\"],[\"WTF\",\"PROP\",\"UP FIRST\",\"DIET\"],[\"BLACK\",\"RADIOLAB\",\"SLEEP\",\"REPLY ALL\"]]}")
   var game = Game(from: gameData)
+  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "FORWARD"]))
+  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "REPLY ALL"]))
   game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
   game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
-    game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
-    game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
-  return GameView(game: game).frame(width: 400, height: 600)
+  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
+  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
+  return GameView(game: game)
 }
