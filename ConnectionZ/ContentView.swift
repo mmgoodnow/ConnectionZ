@@ -22,8 +22,11 @@ public extension Color {
 }
 
 extension Array where Element: Game {
-  subscript(id: Int) -> Game? {
-    first { $0.id == id }
+  func by(id idMaybe: Int?) -> Game? {
+    guard let id = idMaybe else {
+      return nil
+    }
+    return first { $0.id == id }
   }
 }
 
@@ -50,10 +53,13 @@ struct ContentView: View {
     return self.persistedGames.first { $0.id == Game.id(for: date)}
   }
   
+  
   var body: some View {
     NavigationSplitView {
       if persistedGames.isEmpty {
-        ProgressView().navigationTitle("ConnectionZ")
+        ProgressView {
+          Text("Loading games")
+        }.navigationTitle("ConnectionZ")
       } else {
         List(selection: $selectedId) {
           Section(header: Text("Current")) {
@@ -70,19 +76,16 @@ struct ContentView: View {
         }.navigationTitle("ConnectionZ")
       }
     } detail: {
-      let _ = print(selectedId);
-      if let id = selectedId {
-        GameView(game: persistedGames[id])
-          .navigationTitle(persistedGames[id].name)
+      if let game = persistedGames.by(id: selectedId) {
+        GameView(game: game)
+          .navigationTitle(game.name)
 #if os(iOS)
           .navigationBarTitleDisplayMode(.inline)
 #endif
           .frame(minWidth: 300, maxWidth: 1000, minHeight: 400, maxHeight: 1000)
           .aspectRatio(3/4, contentMode: .fit)
       } else {
-        ProgressView {
-          Text("Loading games from NYT servers")
-        }
+        Text("Select a game")
       }
     }
     .onAppear(perform: onAppear)
