@@ -26,20 +26,13 @@ struct Tile: View {
       .padding(8)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .aspectRatio(1, contentMode: .fit)
-      .foregroundStyle(.black)
       .bold()
       .background(
         RoundedRectangle(
           cornerSize: CGSize(width: 10, height: 10)
         )
-        .fill(Color.white)
         .fill(
-          Color(
-            .displayP3,
-            red: 239/256,
-            green: 238/256,
-            blue: 231/256
-          )
+          Color.tertiaryBackground
         )
       )
   }
@@ -104,6 +97,29 @@ struct GuessView: View {
   }
 }
 
+struct GuessesView: View {
+  var guesses: [Guess]
+  var body: some View {
+    Text("Guesses").font(.title3)
+    ScrollView {
+      Grid(alignment: .leading) {
+        ForEach(Array(guesses.enumerated()), id: \.offset) {
+          i, guess in
+          GuessView(i: i, guess: guess)
+        }
+      }.padding()
+    }
+    .defaultScrollAnchor(.bottom)
+    .frame(maxWidth: 500, maxHeight: .infinity)
+    .background(
+      RoundedRectangle(
+        cornerSize: CGSize(width: 10, height: 10)
+      )
+      .fill(Color.secondaryBackground)
+    )
+  }
+}
+
 struct GameView: View {
   let cols = [
     GridItem(.flexible(), spacing: 8),
@@ -115,14 +131,7 @@ struct GameView: View {
   
   var body: some View {
     VStack {
-      ScrollView {
-        Grid(alignment: .leading) {
-          ForEach(Array(game.guesses.enumerated()), id: \.offset) {
-            i, guess in
-            GuessView(i: i, guess: guess)
-          }
-        }
-      }.defaultScrollAnchor(.bottom)
+      GuessesView(guesses: game.guesses)
       if game.isComplete {
         Text("Complete!").font(.title2)
       } else {
@@ -138,8 +147,8 @@ struct GameView: View {
           }
         })
       }
+      .frame(minWidth: 300, maxWidth: 500, minHeight: 300, maxHeight: 500)
       .aspectRatio(1, contentMode: .fit)
-      .frame(minWidth: 300, minHeight: 300)
       .layoutPriority(1)
       HStack {
         if game.isComplete {
@@ -158,18 +167,19 @@ struct GameView: View {
         }
       }
       .padding(.top)
-    }.padding()
+    }
+    .padding()
   }
 }
 
 #Preview {
   let gameData = GameData(json: "{\"id\":150,\"groups\":{\"DOCTORS’ ORDERS\":{\"level\":0,\"members\":[\"DIET\",\"EXERCISE\",\"FRESH AIR\",\"SLEEP\"]},\"EMAIL ACTIONS\":{\"level\":1,\"members\":[\"COMPOSE\",\"FORWARD\",\"REPLY ALL\",\"SEND\"]},\"PODCASTS\":{\"level\":2,\"members\":[\"RADIOLAB\",\"SERIAL\",\"UP FIRST\",\"WTF\"]},\"___ COMEDY\":{\"level\":3,\"members\":[\"BLACK\",\"DIVINE\",\"PROP\",\"SKETCH\"]}},\"startingGroups\":[[\"COMPOSE\",\"DIVINE\",\"EXERCISE\",\"SEND\"],[\"FRESH AIR\",\"FORWARD\",\"SERIAL\",\"SKETCH\"],[\"WTF\",\"PROP\",\"UP FIRST\",\"DIET\"],[\"BLACK\",\"RADIOLAB\",\"SLEEP\",\"REPLY ALL\"]]}")
-  var game = Game(from: gameData)
-  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "FORWARD"]))
-  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "REPLY ALL"]))
-  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
-  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
-  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
-  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
-  return GameView(game: game)
+  let game = Game(from: gameData)
+//  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "FORWARD"]))
+//  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "REPLY ALL"]))
+//  game.guess(words: Set(["RADIOLAB", "UP FIRST", "WTF", "SERIAL"]))
+//  game.guess(words: Set(["FORWARD", "COMPOSE", "REPLY ALL", "SEND"]))
+//  game.guess(words: Set(["DIVINE", "PROP", "BLACK", "SKETCH"]))
+//  game.guess(words: Set(["EXERCISE", "FRESH AIR", "DIET", "SLEEP"]))
+  return GameView(game: game).frame(width: 300, height: 600)
 }

@@ -31,23 +31,10 @@ extension Array where Element: Game {
 }
 
 struct ContentView: View {
-  let backgroundImporter: BackgroundImporter
-  
   @Environment(\.colorScheme) private var colorScheme
-  @Environment(\.modelContext) private var modelContext
   @SceneStorage("ContentView.selectedId") private var selectedId: Int?
   
   @Query(sort: \Game.id) private var persistedGames: [Game]
-  
-  init(backgroundImporter: BackgroundImporter) {
-    self.backgroundImporter = backgroundImporter
-  }
-  
-  private func onAppear() {
-    Task { [backgroundImporter] in
-      await backgroundImporter.synchronizeWithServer()
-    }
-  }
   
   private func game(for date: Date) -> Game? {
     return self.persistedGames.first { $0.id == Game.id(for: date)}
@@ -82,15 +69,11 @@ struct ContentView: View {
 #if os(iOS)
           .navigationBarTitleDisplayMode(.inline)
 #endif
-          .frame(minWidth: 300, maxWidth: 1000, minHeight: 400, maxHeight: 1000)
-          .aspectRatio(3/4, contentMode: .fit)
       } else {
         Text("Select a game")
       }
     }
-    .onAppear(perform: onAppear)
     .background(colorScheme == .dark ? Color.background : Color.white)
   }
 }
-
 

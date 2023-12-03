@@ -105,7 +105,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 512C38312AFCA51F0072D104 /* Build configuration list for PBXNativeTarget "ConnectionZ" */;
 			buildPhases = (
-				51098AD72AFEE35A0002B2A0 /* ShellScript */,
 				512C381B2AFCA51E0072D104 /* Sources */,
 				512C381C2AFCA51E0072D104 /* Frameworks */,
 				512C381D2AFCA51E0072D104 /* Resources */,
@@ -169,26 +168,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		51098AD72AFEE35A0002B2A0 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swift-format >/dev/null; then\n    swift-format -m format -i -r ${PROJECT_DIR}\nelse\n    echo \"warning: swift-format not installed\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		512C381B2AFCA51E0072D104 /* Sources */ = {
