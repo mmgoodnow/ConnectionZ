@@ -32,7 +32,7 @@ struct Tile: View {
           cornerSize: CGSize(width: 10, height: 10)
         )
         .fill(
-          Color.tertiaryBackground
+          Color.secondaryBackground
         )
       )
   }
@@ -41,7 +41,7 @@ struct Tile: View {
 struct CompletedGroup: View {
   let group: Group
   
-  func color() -> Color {
+  var color: Color {
     switch (group.level) {
     case 0: return Color(.displayP3, red: 245/256, green: 224/256, blue: 126/256)
     case 1: return Color(.displayP3, red: 167/256, green: 194/256, blue: 104/256)
@@ -63,7 +63,7 @@ struct CompletedGroup: View {
           width: 10,
           height: 10
         )
-      ).fill(color()))
+      ).fill(color))
   }
 }
 
