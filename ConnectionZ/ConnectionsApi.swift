@@ -6,21 +6,17 @@
 //
 
 import Foundation
-import SwiftSoup
 
 struct ConnectionsApi {
-  private static func parseGamesFromResponse(data: Data) -> [GameData] {
-    let dataStr = String(data: data, encoding: .utf8)!
-    let document: Document = try! SwiftSoup.parse(dataStr)
-    let scriptTags = try! document.select("script[type=\"text/javascript\"]")
-    let js = try! scriptTags.first()!.html()
-    let json = js.replacingOccurrences(of: "window.gameData = ", with: "")
-    return try! JSONDecoder().decode([GameData].self, from: json.data(using: .utf8)!)
-  }
-  
-  static func fetchAllConnectionsGames() async throws -> [GameData]  {
-    let url = URL(string: "https://nytimes.com/games/connections")!
-    let (data, _) = try await URLSession.shared.data(from: url)
-    return self.parseGamesFromResponse(data: data);
+  static func fetchBy(id: Int) async -> GameData? {
+    let dateStr = Game.dateStr(for: id)
+    print(dateStr)
+    let url = URL(string: "https://www.nytimes.com/svc/connections/v1/\(dateStr).json")!
+    do {
+      let (data, _) = try await URLSession.shared.data(from: url)
+      return try JSONDecoder().decode(GameData.self, from:data)
+    } catch {
+      return nil
+    }
   }
 }

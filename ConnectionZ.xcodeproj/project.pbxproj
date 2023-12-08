@@ -13,14 +13,12 @@
 		512C38292AFCA51F0072D104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C38282AFCA51F0072D104 /* Assets.xcassets */; };
 		512C382D2AFCA51F0072D104 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C382C2AFCA51F0072D104 /* Preview Assets.xcassets */; };
 		5136EE692B1EEF71004BFCAC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5136EE682B1EEF71004BFCAC /* Color.swift */; };
-		5154EAC22AFEEC74007C24B2 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5154EAC12AFEEC74007C24B2 /* SwiftSoup */; };
 		5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */; };
 		5154EAC62AFF089E007C24B2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC52AFF089E007C24B2 /* Game.swift */; };
 		5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC72AFFECAD007C24B2 /* GameView.swift */; };
 		5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */; };
 		51D1B2F22B0E8B4B0033BD25 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F12B0E8B4B0033BD25 /* GameData.swift */; };
 		51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F32B0E8FE00033BD25 /* Dates.swift */; };
-		51D1B2F62B0EA7450033BD25 /* BackgroundImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F52B0EA7450033BD25 /* BackgroundImporter.swift */; };
 		51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +37,6 @@
 		5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		51D1B2F12B0E8B4B0033BD25 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		51D1B2F32B0E8FE00033BD25 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
-		51D1B2F52B0EA7450033BD25 /* BackgroundImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImporter.swift; sourceTree = "<group>"; };
 		51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGroupingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,7 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5154EAC22AFEEC74007C24B2 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +83,6 @@
 				512C38282AFCA51F0072D104 /* Assets.xcassets */,
 				512C382E2AFCA51F0072D104 /* Info.plist */,
 				512C382B2AFCA51F0072D104 /* Preview Content */,
-				51D1B2F52B0EA7450033BD25 /* BackgroundImporter.swift */,
 				5136EE682B1EEF71004BFCAC /* Color.swift */,
 			);
 			path = ConnectionZ;
@@ -118,7 +113,6 @@
 			);
 			name = ConnectionZ;
 			packageProductDependencies = (
-				5154EAC12AFEEC74007C24B2 /* SwiftSoup */,
 			);
 			productName = DraggableConnections;
 			productReference = 512C381F2AFCA51E0072D104 /* ConnectionZ.app */;
@@ -149,7 +143,6 @@
 			);
 			mainGroup = 512C38162AFCA51E0072D104;
 			packageReferences = (
-				5154EAC02AFEEC74007C24B2 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = 512C38202AFCA51E0072D104 /* Products */;
 			projectDirPath = "";
@@ -188,7 +181,6 @@
 				512C38232AFCA51E0072D104 /* ConnectionZApp.swift in Sources */,
 				51D1B2F22B0E8B4B0033BD25 /* GameData.swift in Sources */,
 				5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */,
-				51D1B2F62B0EA7450033BD25 /* BackgroundImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,25 +407,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		5154EAC02AFEEC74007C24B2 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		5154EAC12AFEEC74007C24B2 /* SwiftSoup */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5154EAC02AFEEC74007C24B2 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
-			productName = SwiftSoup;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 512C38172AFCA51E0072D104 /* Project object */;
 }

@@ -22,22 +22,14 @@ private func createModelContainer() -> ModelContainer {
 @main
 struct ConnectionZApp: App {
   let sharedModelContainer: ModelContainer
-  let backgroundImporter: BackgroundImporter
   
   init() {
     self.sharedModelContainer = createModelContainer()
-    self.backgroundImporter = BackgroundImporter(modelContainer: sharedModelContainer)
-  }
-  
-  private func onAppear() {
-    Task { [backgroundImporter] in
-      await backgroundImporter.synchronizeWithServer()
-    }
   }
   
   var body: some Scene {
     WindowGroup {
-      ContentView().onAppear(perform: onAppear)
+      ContentView()
     }
     .modelContainer(sharedModelContainer)
   }

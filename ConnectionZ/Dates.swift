@@ -22,6 +22,10 @@ extension Game {
     return Gregorian.dateComponents([.day], from: GAME_ZERO, to: date).day!
   }
   
+  static func dateStr(for id: Int) -> String {
+    return GAME_ZERO.add(days: id).ISO8601Format(.iso8601Date(timeZone: .autoupdatingCurrent))
+  }
+  
   var date: Date {
     let date = Gregorian.date(byAdding: .day, value: self.id, to: GAME_ZERO)!
     return Gregorian.startOfDay(for: date)
