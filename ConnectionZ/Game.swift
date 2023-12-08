@@ -41,7 +41,7 @@ struct Guess: Codable {
 }
 
 @Model class Game {
-  let id: Int
+  @Attribute(.unique) let id: Int
   var words: [String]
   let groups: [Group]
   var guesses = [Guess]()
@@ -60,8 +60,12 @@ struct Guess: Codable {
     self.init(id: gameData.id, words: words, groups: groups)
   }
   
+  static func name(for id: Int) -> String {
+    return "Puzzle #\(id)"
+  }
+  
   var name: String {
-    return "Puzzle #\(id + 1)"
+    return Game.name(for: self.id)
   }
 
   var foundGroups: [Group] {

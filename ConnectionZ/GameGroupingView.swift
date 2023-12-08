@@ -10,20 +10,20 @@ import SwiftUI
 
 struct GameGroupingView: View {
   var sectionName: String
-  var games: [Game]
+  var ids: [Int]
   @State private var isExpanded: Bool
   
-  init(sectionName: String, games: [Game], startCollapsed: Bool = false) {
+  init(sectionName: String, ids: [Int], startCollapsed: Bool = false) {
     self.sectionName = sectionName
-    self.games = games
+    self.ids = ids
     self.isExpanded = !startCollapsed
   }
   
   var body: some View {
-    if (!games.isEmpty) {
+    if (!ids.isEmpty) {
       Section(sectionName, isExpanded: $isExpanded) {
-        ForEach(games) { game in
-          NavigationLink(game.name, value: game.id)
+        ForEach(ids, id: \.self) { id in
+          NavigationLink(Game.name(for: id), value: id)
         }
       }
     }

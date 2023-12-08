@@ -8,7 +8,7 @@
 import Foundation
 
 private let Gregorian = Calendar(identifier: .gregorian)
-private let GAME_ZERO_COMPONENTS = DateComponents(year: 2023, month: 6, day: 12)
+private let GAME_ZERO_COMPONENTS = DateComponents(year: 2023, month: 6, day: 11)
 private let GAME_ZERO = Gregorian.date(from: GAME_ZERO_COMPONENTS)!
 
 extension Date {
