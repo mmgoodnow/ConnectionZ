@@ -8,10 +8,8 @@
 import Foundation
 
 struct ConnectionsApi {
-  static func fetchBy(id: Int) async -> GameData? {
-    let dateStr = Game.dateStr(for: id)
-    print(dateStr)
-    let url = URL(string: "https://www.nytimes.com/svc/connections/v1/\(dateStr).json")!
+  static func fetchBy(date: String) async -> GameData? {
+    let url = URL(string: "https://www.nytimes.com/svc/connections/v1/\(date).json")!
     do {
       let (data, _) = try await URLSession.shared.data(from: url)
       return try JSONDecoder().decode(GameData.self, from:data)

@@ -42,22 +42,24 @@ struct Guess: Codable {
 
 @Model class Game {
   @Attribute(.unique) let id: Int
+  @Attribute(.unique) let date: String
   var words: [String]
   let groups: [Group]
   var guesses = [Guess]()
   
-  init(id: Int, words: [String], groups: [Group]) {
+  init(id: Int, date: String, words: [String], groups: [Group]) {
     self.id = id
+    self.date = date
     self.words = words
     self.groups = groups
   }
   
-  convenience init(from gameData: GameData) {
+  convenience init(from gameData: GameData, on date: String) {
     let words = gameData.startingGroups.flatMap {$0}
     let groups = gameData.groups.map { (groupName, groupData) in
       return Group(name: groupName, level: groupData.level, words: Set(groupData.members))
     }
-    self.init(id: gameData.id, words: words, groups: groups)
+    self.init(id: gameData.id, date: date, words: words, groups: groups)
   }
   
   static func name(for id: Int) -> String {

@@ -16,28 +16,30 @@ extension Array where Element: Game {
     }
     return first { $0.id == id }
   }
+  
+  func by(date dateMaybe: String?) -> Game? {
+    guard let date = dateMaybe else {
+      return nil
+    }
+    return first { $0.date == date }
+  }
 }
 
 struct ContentView: View {
   @Environment(\.colorScheme) private var colorScheme
-  @SceneStorage("ContentView.selectedId") private var selectedId: Int?
+  @SceneStorage("ContentView.selectedDate") private var selectedDate: String?
   @Environment(\.modelContext) private var modelContext
-  @State var updater: Bool = false
-  @Query(sort: \Game.id) private var persistedGames: [Game]
-  
-  private func game(for date: Date) -> Game? {
-    return self.persistedGames.first { $0.id == Game.id(for: date)}
-  }
+  @Query(sort: \Game.date) private var persistedGames: [Game]
   
   private func downloadSelectedGame() async {
-    if let id = selectedId {
-      if persistedGames.by(id: id) == nil  {
-        print("Fetching puzzle \(id)")
-        let response = await ConnectionsApi.fetchBy(id: id)
+    if let date = selectedDate {
+      if persistedGames.by(date: date) == nil  {
+        print("Fetching puzzle \(date)")
+        let response = await ConnectionsApi.fetchBy(date: date)
         if let gameData = response {
-          print("Inserting puzzle \(id)")
-          modelContext.insert(Game(from: gameData))
-          try! modelContext.save()
+          print("Inserting puzzle \(gameData.id) - \(date)")
+          modelContext.insert(Game(from: gameData, on: date))
+          try? modelContext.save()
         }
       }
     }
@@ -47,22 +49,21 @@ struct ContentView: View {
   var body: some View {
     let _ = print("rendering nav, games are \(persistedGames.map(\.id))")
     NavigationSplitView {
-      List(selection: $selectedId) {
+      List(selection: $selectedDate) {
         Section(header: Text("Current")) {
-          NavigationLink("Today's Game", value: Game.id(for: Date()))
-          NavigationLink("Yesterday's Game", value: Game.id(for: Date().add(days: -1)))
+          NavigationLink("Today's Game", value: Date().iso8601())
+          NavigationLink("Yesterday's Game", value: Date().add(days: -1).iso8601())
         }
-        GameGroupingView(sectionName: "In Progress", ids: persistedGames.filter(\.isInProgress).map(\.id))
-        GameGroupingView(sectionName: "Completed", ids: persistedGames.filter(\.isComplete).map(\.id))
+        GameGroupingView(sectionName: "In Progress", dates: persistedGames.filter(\.isInProgress).map(\.date))
+        GameGroupingView(sectionName: "Completed", dates: persistedGames.filter(\.isComplete).map(\.date))
         GameGroupingView(
           sectionName: "Archive",
-          ids: Array(1...Game.id(for: Date())).reversed(),
+          dates: Array(DateSequence(startDate: Date().snapToDay())).map { $0.iso8601() },
           startCollapsed: true
         )
       }.navigationTitle("ConnectionZ")
     } detail: {
-      let _ = print("selectedId \(String(describing: selectedId))")
-      if let game = persistedGames.by(id: selectedId) {
+      if let game = persistedGames.by(date: selectedDate) {
         GameView(game: game)
           .navigationTitle(game.name)
 #if os(iOS)
@@ -71,7 +72,7 @@ struct ContentView: View {
       } else {
         Text("Select a game")
       }
-    }.onChange(of: selectedId, initial: true) {
+    }.onChange(of: selectedDate, initial: true) {
       Task {
         await downloadSelectedGame()
       }

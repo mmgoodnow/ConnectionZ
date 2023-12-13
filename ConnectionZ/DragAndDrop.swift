@@ -47,9 +47,7 @@ struct ReorderableForEach<Content: View, Item: Identifiable & Equatable>: View {
             current: $draggingItem,
             hasChangedLocation: $hasChangedLocation
           ) { from, to in
-            withAnimation {
               moveAction(from, to)
-            }
           }
         )
     }
