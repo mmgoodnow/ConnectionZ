@@ -156,13 +156,13 @@ struct GameView: View {
             copyToClipboard(game.emojis)
           }.buttonStyle(.bordered)
         } else {
+          Button("Shuffle") {
+            game.shuffle()
+          }.buttonStyle(.automatic)
           Button("Guess Top Row") {
             withAnimation {
               game.guess(row: 0..<4)
             }
-          }.buttonStyle(.bordered)
-          Button("Shuffle") {
-            game.shuffle()
           }.buttonStyle(.bordered)
         }
       }

@@ -10,13 +10,6 @@ import SwiftData
 import SwiftSoup
 
 extension Array where Element: Game {
-  func by(id idMaybe: Int?) -> Game? {
-    guard let id = idMaybe else {
-      return nil
-    }
-    return first { $0.id == id }
-  }
-  
   func by(date dateMaybe: String?) -> Game? {
     guard let date = dateMaybe else {
       return nil
@@ -47,7 +40,6 @@ struct ContentView: View {
   
   
   var body: some View {
-    let _ = print("rendering nav, games are \(persistedGames.map(\.id))")
     NavigationSplitView {
       List(selection: $selectedDate) {
         Section(header: Text("Current")) {
