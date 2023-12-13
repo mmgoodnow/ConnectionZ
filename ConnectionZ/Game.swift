@@ -62,12 +62,8 @@ struct Guess: Codable {
     self.init(id: gameData.id, date: date, words: words, groups: groups)
   }
   
-  static func name(for id: Int) -> String {
-    return "Puzzle #\(id)"
-  }
-  
   var name: String {
-    return Game.name(for: self.id)
+    return "Puzzle #\(Game.puzzleNumber(for: Date(iso8601:self.date)))"
   }
 
   var foundGroups: [Group] {
