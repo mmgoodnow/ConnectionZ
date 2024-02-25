@@ -40,6 +40,13 @@ struct Guess: Codable {
   }
 }
 
+enum GuessResult {
+  case alreadyGuessed
+  case incorrect
+  case oneAway
+  case correct
+}
+
 @Model class Game {
   @Attribute(.unique) let id: Int
   @Attribute(.unique) let date: String
@@ -94,25 +101,34 @@ struct Guess: Codable {
     return ["ConnectionZ", self.name, emojis].joined(separator: "\n")
   }
   
-  func guess(words candidates: Set<String>) -> Void {
+  func guess(words candidates: Set<String>) -> GuessResult {
     if guesses.contains(where: { $0.words == candidates }) {
-      return;
+      return .alreadyGuessed
     }
     
     let closestGroup: Group = self.groups.reduce(self.groups[0]) {acc, cur in
       let accCount = acc.score(of: candidates)
       let curCount = cur.score(of: candidates)
-      return curCount > (accCount) ? cur : acc;
+      return curCount > (accCount) ? cur : acc
     }
     
-    if closestGroup.score(of: candidates) == 4 {
+    let score = closestGroup.score(of: candidates)
+    if score == 4 {
       self.words = self.words.filter { !closestGroup.words.contains($0) }
     }
     
     guesses.append(Guess(words: candidates, score: closestGroup.score(of: candidates)))
+    switch score {
+    case 4:
+      return .correct
+    case 3:
+      return .oneAway
+    default:
+      return .incorrect
+    }
   }
   
-  func guess(row indices: Range<Int>) {
+  func guess(row indices: Range<Int>) -> GuessResult  {
     return self.guess(words: Set(self.words[indices]))
   }
   

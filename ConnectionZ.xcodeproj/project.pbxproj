@@ -13,10 +13,12 @@
 		512C38292AFCA51F0072D104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C38282AFCA51F0072D104 /* Assets.xcassets */; };
 		512C382D2AFCA51F0072D104 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512C382C2AFCA51F0072D104 /* Preview Assets.xcassets */; };
 		5136EE692B1EEF71004BFCAC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5136EE682B1EEF71004BFCAC /* Color.swift */; };
+		514644D82B8BFF1D007523B8 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514644D72B8BFF1D007523B8 /* Toast.swift */; };
 		5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */; };
 		5154EAC62AFF089E007C24B2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC52AFF089E007C24B2 /* Game.swift */; };
 		5154EAC82AFFECAD007C24B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EAC72AFFECAD007C24B2 /* GameView.swift */; };
 		5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5154EACB2B00A63B007C24B2 /* DragAndDrop.swift */; };
+		518048E62B8BFD7C003D3117 /* Drops in Frameworks */ = {isa = PBXBuildFile; productRef = 518048E52B8BFD7C003D3117 /* Drops */; };
 		51D1B2F22B0E8B4B0033BD25 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F12B0E8B4B0033BD25 /* GameData.swift */; };
 		51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F32B0E8FE00033BD25 /* Dates.swift */; };
 		51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */; };
@@ -31,6 +33,7 @@
 		512C382C2AFCA51F0072D104 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		512C382E2AFCA51F0072D104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5136EE682B1EEF71004BFCAC /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		514644D72B8BFF1D007523B8 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		5154EAC32AFEF65F007C24B2 /* ConnectionsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsApi.swift; sourceTree = "<group>"; };
 		5154EAC52AFF089E007C24B2 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		5154EAC72AFFECAD007C24B2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				518048E62B8BFD7C003D3117 /* Drops in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				51D1B2F12B0E8B4B0033BD25 /* GameData.swift */,
+				514644D72B8BFF1D007523B8 /* Toast.swift */,
 				5154EAC52AFF089E007C24B2 /* Game.swift */,
 				51D1B2F32B0E8FE00033BD25 /* Dates.swift */,
 				512C38242AFCA51E0072D104 /* ContentView.swift */,
@@ -113,6 +118,7 @@
 			);
 			name = ConnectionZ;
 			packageProductDependencies = (
+				518048E52B8BFD7C003D3117 /* Drops */,
 			);
 			productName = DraggableConnections;
 			productReference = 512C381F2AFCA51E0072D104 /* ConnectionZ.app */;
@@ -143,6 +149,7 @@
 			);
 			mainGroup = 512C38162AFCA51E0072D104;
 			packageReferences = (
+				518048E42B8BFD7C003D3117 /* XCRemoteSwiftPackageReference "Drops" */,
 			);
 			productRefGroup = 512C38202AFCA51E0072D104 /* Products */;
 			projectDirPath = "";
@@ -171,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5154EACC2B00A63B007C24B2 /* DragAndDrop.swift in Sources */,
+				514644D82B8BFF1D007523B8 /* Toast.swift in Sources */,
 				51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */,
 				51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */,
 				5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */,
@@ -407,6 +415,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		518048E42B8BFD7C003D3117 /* XCRemoteSwiftPackageReference "Drops" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/omaralbeik/Drops.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		518048E52B8BFD7C003D3117 /* Drops */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 518048E42B8BFD7C003D3117 /* XCRemoteSwiftPackageReference "Drops" */;
+			productName = Drops;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 512C38172AFCA51E0072D104 /* Project object */;
 }

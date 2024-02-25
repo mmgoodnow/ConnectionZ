@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Drops
 
 extension String: Identifiable {
   public typealias ID = Int
@@ -95,11 +96,11 @@ struct GuessView: View {
   
   var icon: String {
     if guess.score == 4 {
-      return "star.fill"
+      return "4.square.fill"
     } else if guess.score == 3 {
-      return "circle.fill"
+      return "3.square"
     } else {
-      return "circle"
+      return "square"
     }
   }
   
@@ -186,6 +187,7 @@ struct GameView: View {
         if game.isComplete {
           Button("Copy Results") {
             copyToClipboard(game.emojis)
+            Toast.copied()
           }.buttonStyle(.bordered)
         } else {
           Spacer()
@@ -201,10 +203,19 @@ struct GameView: View {
           Spacer()
           Button(guessButtonText) {
             withAnimation {
-              if selected.count == 4 {
-                game.guess(words: selected)
-              } else {
+              let guessResult = 
+              selected.count == 4 ?
+                game.guess(words: selected) :
                 game.guess(row: 0..<4)
+              switch guessResult {
+              case .alreadyGuessed:
+                Toast.alreadyGuessed()
+              case .oneAway:
+                Toast.oneAway()
+              case .correct:
+                selected.removeAll()
+              case .incorrect:
+                break
               }
             }
           }.buttonStyle(.bordered)
