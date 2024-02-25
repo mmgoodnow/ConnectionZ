@@ -15,9 +15,22 @@ extension String: Identifiable {
   }
 }
 
+extension View {
+    public func addBorder<S>(_ content: S, width: CGFloat = 1, cornerRadius: CGFloat) -> some View where S : ShapeStyle {
+        let roundedRect = RoundedRectangle(cornerRadius: cornerRadius)
+        return clipShape(roundedRect)
+             .overlay(roundedRect.strokeBorder(content, lineWidth: width))
+    }
+}
+
 struct Tile: View {
   var word: String
+  var selected: Bool
+  var selectAction: () -> Void
   
+  var borderWidth: CGFloat {
+    return selected ? 4 : 0
+  }
   var body: some View {
     Text(word)
       .multilineTextAlignment(.center)
@@ -31,10 +44,10 @@ struct Tile: View {
         RoundedRectangle(
           cornerSize: CGSize(width: 10, height: 10)
         )
-        .fill(
-          Color.secondaryBackground
-        )
-      )
+        .fill(Color.secondaryBackground)
+        .addBorder(Color.accentColor, width: borderWidth, cornerRadius: 10)
+      ).onTapGesture(perform: selectAction)
+
   }
 }
 
@@ -128,6 +141,23 @@ struct GameView: View {
     GridItem(.flexible(), spacing: 8)
   ]
   var game: Game
+  @State var selected = Set<String>()
+  
+  func select(word: String) {
+    if self.selected.contains(word) {
+      self.selected.remove(word)
+    } else if self.selected.count < 4 {
+      self.selected.insert(word)
+    }
+  }
+  
+  func isSelected(word: String) -> Bool {
+    return self.selected.contains(word)
+  }
+  
+  var guessButtonText: String {
+    return selected.count == 4 ? "Guess Selection" : "Guess Top Row"
+  }
   
   var body: some View {
     VStack {
@@ -141,7 +171,9 @@ struct GameView: View {
         CompletedGroups(groups: game.foundGroups)
         LazyVGrid(columns: cols, spacing: 8, content: {
           ReorderableForEach(items: game.words) { word in
-            Tile(word: word)
+            Tile(word: word, selected: isSelected(word: word), selectAction: {
+              select(word: word)
+            })
           } moveAction: { from, to in
             game.words.move(fromOffsets: from, toOffset: to)
           }
@@ -156,14 +188,27 @@ struct GameView: View {
             copyToClipboard(game.emojis)
           }.buttonStyle(.bordered)
         } else {
+          Spacer()
           Button("Shuffle") {
             game.shuffle()
-          }.buttonStyle(.automatic)
-          Button("Guess Top Row") {
+          }.buttonStyle(.bordered)
+          Spacer()
+          Button("Hoist") {
             withAnimation {
-              game.guess(row: 0..<4)
+              game.hoist(words: selected)
             }
           }.buttonStyle(.bordered)
+          Spacer()
+          Button(guessButtonText) {
+            withAnimation {
+              if selected.count == 4 {
+                game.guess(words: selected)
+              } else {
+                game.guess(row: 0..<4)
+              }
+            }
+          }.buttonStyle(.bordered)
+          Spacer()
         }
       }
       .padding(.top)

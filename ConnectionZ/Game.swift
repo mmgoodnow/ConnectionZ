@@ -123,4 +123,9 @@ struct Guess: Codable {
   func reset() {
     self.guesses.removeAll()
   }
+  
+  func hoist(words: Set<String>) {
+    self.words.removeAll(where: { words.contains($0) })
+    self.words.insert(contentsOf: words, at: 0)
+  }
 }
