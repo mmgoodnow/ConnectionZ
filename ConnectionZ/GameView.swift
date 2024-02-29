@@ -199,6 +199,9 @@ struct GameView: View {
             withAnimation {
               game.hoist(words: selected)
             }
+            withAnimation {
+              selected.removeAll()
+            }
           }.buttonStyle(.bordered)
           Spacer()
           Button(guessButtonText) {

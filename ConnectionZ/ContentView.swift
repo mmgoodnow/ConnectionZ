@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import SwiftSoup
 
 extension Array where Element: Game {
   func by(date dateMaybe: String?) -> Game? {
