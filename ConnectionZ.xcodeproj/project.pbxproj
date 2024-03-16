@@ -22,7 +22,18 @@
 		51D1B2F22B0E8B4B0033BD25 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F12B0E8B4B0033BD25 /* GameData.swift */; };
 		51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F32B0E8FE00033BD25 /* Dates.swift */; };
 		51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */; };
+		51E549D32BA660B300A43D10 /* ConnectionZTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E549D22BA660B300A43D10 /* ConnectionZTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		51E549D42BA660B300A43D10 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 512C38172AFCA51E0072D104 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 512C381E2AFCA51E0072D104;
+			remoteInfo = ConnectionZ;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		511E55322B05DB7C003743F5 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
@@ -41,6 +52,8 @@
 		51D1B2F12B0E8B4B0033BD25 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		51D1B2F32B0E8FE00033BD25 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGroupingView.swift; sourceTree = "<group>"; };
+		51E549D02BA660B300A43D10 /* ConnectionZTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectionZTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		51E549D22BA660B300A43D10 /* ConnectionZTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionZTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +65,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		51E549CD2BA660B300A43D10 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -59,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				512C38212AFCA51E0072D104 /* ConnectionZ */,
+				51E549D12BA660B300A43D10 /* ConnectionZTests */,
 				512C38202AFCA51E0072D104 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				512C381F2AFCA51E0072D104 /* ConnectionZ.app */,
+				51E549D02BA660B300A43D10 /* ConnectionZTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,6 +123,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		51E549D12BA660B300A43D10 /* ConnectionZTests */ = {
+			isa = PBXGroup;
+			children = (
+				51E549D22BA660B300A43D10 /* ConnectionZTests.swift */,
+			);
+			path = ConnectionZTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -124,6 +154,24 @@
 			productReference = 512C381F2AFCA51E0072D104 /* ConnectionZ.app */;
 			productType = "com.apple.product-type.application";
 		};
+		51E549CF2BA660B300A43D10 /* ConnectionZTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51E549D62BA660B300A43D10 /* Build configuration list for PBXNativeTarget "ConnectionZTests" */;
+			buildPhases = (
+				51E549CC2BA660B300A43D10 /* Sources */,
+				51E549CD2BA660B300A43D10 /* Frameworks */,
+				51E549CE2BA660B300A43D10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				51E549D52BA660B300A43D10 /* PBXTargetDependency */,
+			);
+			name = ConnectionZTests;
+			productName = ConnectionZTests;
+			productReference = 51E549D02BA660B300A43D10 /* ConnectionZTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -136,6 +184,10 @@
 				TargetAttributes = {
 					512C381E2AFCA51E0072D104 = {
 						CreatedOnToolsVersion = 15.0.1;
+					};
+					51E549CF2BA660B300A43D10 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 512C381E2AFCA51E0072D104;
 					};
 				};
 			};
@@ -156,6 +208,7 @@
 			projectRoot = "";
 			targets = (
 				512C381E2AFCA51E0072D104 /* ConnectionZ */,
+				51E549CF2BA660B300A43D10 /* ConnectionZTests */,
 			);
 		};
 /* End PBXProject section */
@@ -167,6 +220,13 @@
 			files = (
 				512C382D2AFCA51F0072D104 /* Preview Assets.xcassets in Resources */,
 				512C38292AFCA51F0072D104 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51E549CE2BA660B300A43D10 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +252,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		51E549CC2BA660B300A43D10 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51E549D32BA660B300A43D10 /* ConnectionZTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		51E549D52BA660B300A43D10 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 512C381E2AFCA51E0072D104 /* ConnectionZ */;
+			targetProxy = 51E549D42BA660B300A43D10 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		512C382F2AFCA51F0072D104 /* Debug */ = {
@@ -251,7 +327,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "";
+				PRODUCT_NAME = ConnectionZ;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -306,7 +382,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "";
+				PRODUCT_NAME = ConnectionZ;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -393,6 +469,44 @@
 			};
 			name = Release;
 		};
+		51E549D72BA660B300A43D10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AFD89X85F4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bebopbeluga.ConnectionZTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConnectionZ.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ConnectionZ";
+			};
+			name = Debug;
+		};
+		51E549D82BA660B300A43D10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AFD89X85F4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bebopbeluga.ConnectionZTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConnectionZ.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ConnectionZ";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -410,6 +524,15 @@
 			buildConfigurations = (
 				512C38322AFCA51F0072D104 /* Debug */,
 				512C38332AFCA51F0072D104 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51E549D62BA660B300A43D10 /* Build configuration list for PBXNativeTarget "ConnectionZTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51E549D72BA660B300A43D10 /* Debug */,
+				51E549D82BA660B300A43D10 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
