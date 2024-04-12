@@ -37,6 +37,26 @@ struct ContentView: View {
     }
   }
   
+  var streakRepairDates: [Date] {
+    guard let firstCompletedGame = persistedGames.first(where: \.isComplete) else {
+      return []
+    }
+    
+    let firstDate = Date(iso8601: firstCompletedGame.date)
+    var dates = [Date]()
+    for date in DateSequence(startDate: Date().snapToDay()) {
+      if (date <= firstDate) {
+        break;
+      }
+      if let persistedGame = persistedGames.by(date: date.iso8601()) {
+        if (persistedGame.isComplete) {
+          continue;
+        }
+      }
+      dates.append(date)
+    }
+    return dates.reversed()
+  }
   
   var body: some View {
     NavigationSplitView {
@@ -46,7 +66,8 @@ struct ContentView: View {
           NavigationLink("Yesterday's Game", value: Date().add(days: -1).iso8601())
         }
         GameGroupingView(sectionName: "In Progress", dates: persistedGames.filter(\.isInProgress).map(\.date))
-        GameGroupingView(sectionName: "Completed", dates: persistedGames.filter(\.isComplete).map(\.date))
+        GameGroupingView(sectionName: "Streak Repair", dates: streakRepairDates.map { $0.iso8601() })
+        GameGroupingView(sectionName: "Completed", dates: persistedGames.filter(\.isComplete).map(\.date).reversed())
         GameGroupingView(
           sectionName: "Archive",
           dates: Array(DateSequence(startDate: Date().snapToDay())).map { $0.iso8601() },
