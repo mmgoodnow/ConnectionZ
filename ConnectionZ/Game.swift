@@ -50,8 +50,8 @@ enum GuessResult {
 @Model class Game {
   @Attribute(.unique) let id: Int
   @Attribute(.unique) let date: String
-  var words: [String]
   let groups: [Group]
+  var words: [String]
   var guesses = [Guess]()
   
   init(id: Int, date: String, words: [String], groups: [Group]) {
@@ -67,6 +67,11 @@ enum GuessResult {
       return Group(name: groupName, level: groupData.level, words: Set(groupData.members))
     }
     self.init(id: gameData.id, date: date, words: words, groups: groups)
+  }
+  
+  func reset() -> Void {
+    self.guesses.removeAll()
+    self.words = self.groups.flatMap { $0.words }.shuffled()
   }
   
   var name: String {
@@ -134,10 +139,6 @@ enum GuessResult {
   
   func shuffle() {
     self.words.shuffle()
-  }
-  
-  func reset() {
-    self.guesses.removeAll()
   }
   
   func hoist(words: Set<String>) {

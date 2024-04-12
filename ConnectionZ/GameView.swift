@@ -145,15 +145,15 @@ struct GameView: View {
   @State var selected = Set<String>()
   
   func select(word: String) {
-    if self.selected.contains(word) {
-      self.selected.remove(word)
-    } else if self.selected.count < 4 {
-      self.selected.insert(word)
+    if selected.contains(word) {
+      selected.remove(word)
+    } else if selected.count < 4 {
+      selected.insert(word)
     }
   }
   
   func isSelected(word: String) -> Bool {
-    return self.selected.contains(word)
+    return selected.contains(word)
   }
   
   var guessButtonText: String {
@@ -185,14 +185,20 @@ struct GameView: View {
       .layoutPriority(1)
       HStack {
         if game.isComplete {
+          Spacer()
           Button("Copy Results") {
             copyToClipboard(game.emojis)
             Toast.copied()
           }.buttonStyle(.bordered)
+          Spacer()
+          Button("Try Again") {
+            game.reset()
+          }
+          Spacer()
         } else {
           Spacer()
-          Button("Shuffle") {
-            game.shuffle()
+          Button("Deselect All") {
+            selected.removeAll()
           }.buttonStyle(.bordered)
           Spacer()
           Button("Hoist") {
