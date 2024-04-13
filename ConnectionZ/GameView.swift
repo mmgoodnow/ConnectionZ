@@ -143,6 +143,7 @@ struct GameView: View {
   ]
   var game: Game
   @State var selected = Set<String>()
+  @State var shouldShowConfirmationDialog = false;
   
   func select(word: String) {
     if selected.contains(word) {
@@ -191,9 +192,19 @@ struct GameView: View {
             Toast.copied()
           }.buttonStyle(.bordered)
           Spacer()
-          Button("Try Again") {
-            game.reset()
-          }
+          Button("Reset Game") {
+            shouldShowConfirmationDialog = true
+          }.buttonStyle(.bordered)
+            .confirmationDialog(
+              "Resetting will delete this game's history.",
+              isPresented: $shouldShowConfirmationDialog
+            ) {
+              Button("Reset Game", role: .destructive) {
+                game.reset()
+              }.keyboardShortcut(.defaultAction)
+              Button("Cancel", role: .cancel, action: {})
+                .keyboardShortcut(.cancelAction)
+            }
           Spacer()
         } else {
           Spacer()
