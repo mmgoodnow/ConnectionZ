@@ -24,6 +24,13 @@ extension View {
     }
 }
 
+enum Swipe {
+  case up
+  case down
+  case left
+  case right
+}
+
 struct Tile: View {
   var word: String
   var selected: Bool
@@ -153,6 +160,14 @@ struct GameView: View {
     }
   }
   
+  func onSwipe(direction: Swipe) {
+    if direction == .up {
+
+    } else if direction == .down {
+
+    }
+  }
+
   func isSelected(word: String) -> Bool {
     return selected.contains(word)
   }
@@ -179,7 +194,11 @@ struct GameView: View {
           } moveAction: { from, to in
             game.words.move(fromOffsets: from, toOffset: to)
           }
-        })
+        }).gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local).onEnded { value in
+          if abs(value.translation.height) > abs(value.translation.width) {
+            game.onMove(words: selected, direction: value.translation.height.sign == .minus ? -1 : 1)
+          }
+      })
       }
       .frame(minWidth: 300, maxWidth: 500, minHeight: 300, maxHeight: 500)
       .aspectRatio(1, contentMode: .fit)
@@ -212,14 +231,7 @@ struct GameView: View {
             selected.removeAll()
           }.buttonStyle(.bordered)
           Spacer()
-          Button("Hoist") {
-            withAnimation {
-              game.hoist(words: selected)
-            }
-            withAnimation {
-              selected.removeAll()
-            }
-          }.buttonStyle(.bordered)
+          Button("Shuffle") { game.words.shuffle() }.buttonStyle(.bordered)
           Spacer()
           Button(guessButtonText) {
             withAnimation {

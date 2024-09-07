@@ -145,4 +145,29 @@ enum GuessResult {
     self.words.removeAll(where: { words.contains($0) })
     self.words.insert(contentsOf: words, at: 0)
   }
+  
+  func drop(words: Set<String>) {
+    self.words.removeAll(where: { words.contains($0) })
+    self.words.insert(contentsOf: words, at: 12)
+  }
+  
+  func roll(from src: Int, direction: Int) {
+    let words = Array(self.words[src..<src + 4])
+    let dest = ((src + direction.signum() * 4) + 16) % 16;
+    self.words.removeAll(where: {words.contains($0)})
+    self.words.insert(contentsOf: words, at: dest)
+  }
+  
+  func onMove(words: Set<String>, direction: Int) {
+    var indices = self.words.indices.filter {words.contains(self.words[$0])}
+    indices.sort()
+    let isRow = words.count == 4 && indices[0] % 4 == 0 && indices[3] == indices[0] + 3
+    if isRow {
+      roll(from: indices[0], direction: direction)
+    } else if direction < 0 {
+      hoist(words: words)
+    } else if direction > 0 {
+      drop(words: words)
+    }
+  }
 }
