@@ -148,12 +148,12 @@ enum GuessResult {
   
   func drop(words: Set<String>) {
     self.words.removeAll(where: { words.contains($0) })
-    self.words.insert(contentsOf: words, at: 12)
+    self.words.insert(contentsOf: words, at: self.words.count)
   }
   
   func roll(from src: Int, direction: Int) {
     let words = Array(self.words[src..<src + 4])
-    let dest = ((src + direction.signum() * 4) + 16) % 16;
+    let dest = ((src + direction.signum() * 4) + self.words.count) % self.words.count;
     self.words.removeAll(where: {words.contains($0)})
     self.words.insert(contentsOf: words, at: dest)
   }
