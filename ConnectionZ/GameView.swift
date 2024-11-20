@@ -149,6 +149,7 @@ struct GameView: View {
     GridItem(.flexible(), spacing: 8)
   ]
   var game: Game
+  @Environment(\.modelContext) private var context
   @State var selected = Set<String>()
   @State var shouldShowConfirmationDialog = false;
   
@@ -239,6 +240,7 @@ struct GameView: View {
               selected.count == 4 ?
                 game.guess(words: selected) :
                 game.guess(row: 0..<4)
+			  try? context.save()
               switch guessResult {
               case .alreadyGuessed:
                 Toast.alreadyGuessed()
