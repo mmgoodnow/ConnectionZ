@@ -18,6 +18,7 @@ extension Array where Element: Game {
 }
 
 struct ContentView: View {
+	@State private var refreshTrigger = false
 	@Environment(\.colorScheme) private var colorScheme
 	@SceneStorage("ContentView.selectedDate") private var selectedDate: String?
 	@Environment(\.modelContext) private var modelContext
@@ -77,6 +78,9 @@ struct ContentView: View {
 					NavigationLink("View Stats", value: "stats")
 				}
 			}.navigationTitle("ConnectionZ")
+				.refreshable {
+					refreshTrigger.toggle()
+				}
 		} detail: {
 			if selectedDate == "stats" {
 				StatsView()
