@@ -12,9 +12,22 @@ import Charts
 
 struct StatsView: View {
 	@Query(sort: \Game.date) private var persistedGames: [Game]
-	
+	@State private var showPercentages = false
+
 	var completedGames: [Game] {
 		persistedGames.filter(\.isComplete)
+	}
+	
+	var totalCompleted: Int {
+		completedGames.count
+	}
+	
+	var perfectScoreCount: Int {
+		completedGames.filter(\.isPerfectScore).count
+	}
+	
+	var purplesFirstCount: Int {
+		completedGames.filter(\.gotPurplesFirst).count
 	}
 	
 	var binnedData: [(
@@ -45,6 +58,11 @@ struct StatsView: View {
 		return preparedData
 	}
 	
+	private func percentage(_ part: Int, of total: Int) -> String {
+		guard total > 0 else { return "0" }
+		return String(format: "%.0f", (Double(part) / Double(total)) * 100)
+	}
+	
 	var body: some View {
 		List {
 			Section {
@@ -56,18 +74,23 @@ struct StatsView: View {
 				HStack {
 					Text("Games Completed")
 					Spacer()
-					Text("\(completedGames.count)")
+					Text("\(totalCompleted)")
 				}
 				HStack {
 					Text("Perfect Score")
 					Spacer()
-					Text("\(completedGames.filter(\.isPerfectScore).count)")
+					Text(showPercentages ? "\(percentage(perfectScoreCount, of: totalCompleted))%" : "\(perfectScoreCount)")
+						.contentTransition(.numericText())
 				}
 				HStack {
 					Text("Purples First")
 					Spacer()
-					Text("\(completedGames.filter(\.gotPurplesFirst).count)")
+					Text(showPercentages ? "\(percentage(purplesFirstCount, of: totalCompleted))%" : "\(purplesFirstCount)")
+						.contentTransition(.numericText())
 				}
+			}
+			.onTapGesture {
+				showPercentages.toggle()
 			}
 			
 			Section("Completion Histogram") {
