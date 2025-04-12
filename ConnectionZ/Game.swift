@@ -62,8 +62,8 @@ enum GuessResult {
 	}
 	
 	convenience init(from gameData: GameData, on date: String) {
-		let words = gameData.startingGroups.flatMap {$0}
-		let groups = gameData.groups.map { (groupName, groupData) in
+		let words = gameData.processedStartingGroups.flatMap {$0}
+		let groups = gameData.processedGroups.map { (groupName, groupData) in
 			return Group(name: groupName, level: groupData.level, words: Set(groupData.members))
 		}
 		self.init(id: gameData.id, date: date, words: words, groups: groups)

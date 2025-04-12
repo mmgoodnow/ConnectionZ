@@ -19,14 +19,22 @@ extension Array where Element: Game {
 
 struct ContentView: View {
 	@State private var refreshTrigger = false
+	@State private var showRedownloadAlert = false
+	@State private var forceRedownloadDate: String?
 	@Environment(\.colorScheme) private var colorScheme
 	@SceneStorage("ContentView.selectedDate") private var selectedDate: String?
 	@Environment(\.modelContext) private var modelContext
 	@Query(sort: \Game.date) private var persistedGames: [Game]
 	
-	private func downloadSelectedGame() async {
+	private func downloadSelectedGame(forceRedownload: Bool = false) async {
 		if let date = selectedDate, date != "stats" {
-			if persistedGames.by(date: date) == nil  {
+			if forceRedownload || persistedGames.by(date: date) == nil {
+				// If force redownload and game exists, delete it first
+				if forceRedownload, let existingGame = persistedGames.by(date: date) {
+					modelContext.delete(existingGame)
+					try? modelContext.save()
+				}
+				
 				print("Fetching puzzle \(date)")
 				let response = await ConnectionsApi.fetchBy(date: date)
 				if let gameData = response {
@@ -81,6 +89,14 @@ struct ContentView: View {
 				.refreshable {
 					refreshTrigger.toggle()
 				}
+				.contextMenu(forSelectionType: String.self) { items in
+					if let selectedItems = items.first, selectedItems != "stats" {
+						Button("Redownload Puzzle") {
+							forceRedownloadDate = selectedItems
+							showRedownloadAlert = true
+						}
+					}
+				}
 		} detail: {
 			if selectedDate == "stats" {
 				StatsView()
@@ -92,13 +108,35 @@ struct ContentView: View {
 #if os(iOS)
 					.navigationBarTitleDisplayMode(.inline)
 #endif
+					.toolbar {
+						ToolbarItem(placement: .secondaryAction) {
+							Button("Redownload Puzzle") {
+								forceRedownloadDate = selectedDate
+								showRedownloadAlert = true
+							}
+						}
+					}
 			} else {
 				Text("Select a game")
 			}
-		}.onChange(of: selectedDate, initial: true) {
+		}
+		.onChange(of: selectedDate, initial: true) {
 			Task {
 				await downloadSelectedGame()
 			}
+		}
+		.alert("Redownload Puzzle", isPresented: $showRedownloadAlert) {
+			Button("Cancel", role: .cancel) {}
+			Button("Redownload", role: .destructive) {
+				if let date = forceRedownloadDate {
+					selectedDate = date
+					Task {
+						await downloadSelectedGame(forceRedownload: true)
+					}
+				}
+			}
+		} message: {
+			Text("This will delete and redownload the puzzle. This is useful for puzzles like April 1st, 2025 that had a special format.")
 		}
 	}
 }

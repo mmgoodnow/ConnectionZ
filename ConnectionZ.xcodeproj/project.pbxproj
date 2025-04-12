@@ -24,6 +24,7 @@
 		51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F32B0E8FE00033BD25 /* Dates.swift */; };
 		51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */; };
 		51E549D32BA660B300A43D10 /* ConnectionZTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E549D22BA660B300A43D10 /* ConnectionZTests.swift */; };
+		51F0C8692DA49EA40095F609 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F0C8682DA49EA40095F609 /* Tile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGroupingView.swift; sourceTree = "<group>"; };
 		51E549D02BA660B300A43D10 /* ConnectionZTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectionZTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51E549D22BA660B300A43D10 /* ConnectionZTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionZTests.swift; sourceTree = "<group>"; };
+		51F0C8682DA49EA40095F609 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		512C38212AFCA51E0072D104 /* ConnectionZ */ = {
 			isa = PBXGroup;
 			children = (
+				51F0C8682DA49EA40095F609 /* Tile.swift */,
 				512C38222AFCA51E0072D104 /* ConnectionZApp.swift */,
 				512C38242AFCA51E0072D104 /* ContentView.swift */,
 				51D1B2F72B0F04E40033BD25 /* GameGroupingView.swift */,
@@ -245,6 +248,7 @@
 				51D1B2F82B0F04E40033BD25 /* GameGroupingView.swift in Sources */,
 				51D1B2F42B0E8FE00033BD25 /* Dates.swift in Sources */,
 				5154EAC42AFEF65F007C24B2 /* ConnectionsApi.swift in Sources */,
+				51F0C8692DA49EA40095F609 /* Tile.swift in Sources */,
 				511E55332B05DB7C003743F5 /* Clipboard.swift in Sources */,
 				5136EE692B1EEF71004BFCAC /* Color.swift in Sources */,
 				5154EAC62AFF089E007C24B2 /* Game.swift in Sources */,
