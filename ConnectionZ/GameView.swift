@@ -31,6 +31,25 @@ enum Swipe {
   case right
 }
 
+struct Shake: GeometryEffect {
+    var amount: CGFloat = 3
+    var shakesPerUnit = 2
+    var animatableData: CGFloat
+    var selected: Bool
+    
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        if selected {
+            return ProjectionTransform(CGAffineTransform(
+                translationX: amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
+                y: 0))
+        } else {
+            return ProjectionTransform(CGAffineTransform(
+                translationX: amount * sin(0 * .pi * CGFloat(shakesPerUnit)),
+                y: 0))
+        }
+    }
+}
+
 
 struct CompletedGroup: View {
   let group: Group
@@ -124,7 +143,8 @@ struct GameView: View {
   var game: Game
   @Environment(\.modelContext) private var context
   @State var selected = Set<String>()
-  @State var shouldShowConfirmationDialog = false;
+  @State var shouldShowConfirmationDialog = false
+  @State var attempts: Int = 0
   
   func select(word: String) {
     if selected.contains(word) {
@@ -165,6 +185,7 @@ struct GameView: View {
             Tile(word: word, selected: isSelected(word: word), selectAction: {
               select(word: word)
             })
+            .modifier(Shake(animatableData: CGFloat(attempts), selected: isSelected(word: word)))
           } moveAction: { from, to in
             game.words.move(fromOffsets: from, toOffset: to)
           }
@@ -222,7 +243,7 @@ struct GameView: View {
               case .correct:
                 selected.removeAll()
               case .incorrect:
-                break
+                self.attempts += 2
               }
             }
           }.buttonStyle(.bordered)
