@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" version="1.1">
+  <ns0:title>ConnectionZ Segmented Z Icon</ns0:title>
+  <ns0:desc>
+    Four discrete segments forming a stylised Z for ConnectionZ.
+    Coordinates use round numbers to keep the layout easy to edit.
+    Segment order from top to bottom: yellow, green, blue, purple.
+  </ns0:desc>
+  <ns0:g fill="none" stroke-width="160" stroke-linecap="round" stroke-linejoin="round">
+    
+    <ns0:path d="M 490.4 803.2 L 803.2 803.2" stroke="#b283c1" />
+  </ns0:g>
+</ns0:svg>

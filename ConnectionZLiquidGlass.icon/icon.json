@@ -1,0 +1,51 @@
+{
+  "fill" : "system-light",
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "fill" : {
+            "solid" : "srgb:0.96078,0.87601,0.48039,1.00000"
+          },
+          "image-name" : "icon-z-scaled-yellow 5.svg",
+          "name" : "Yellow"
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.64667,0.76078,0.38039,1.00000"
+          },
+          "image-name" : "icon-z-scaled-green 5.svg",
+          "name" : "Green"
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.46078,0.58645,0.92157,1.00000"
+          },
+          "image-name" : "icon-z-scaled-blue 5.svg",
+          "name" : "Blue"
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.66531,0.37843,0.75686,1.00000"
+          },
+          "image-name" : "icon-z-scaled-purple 5.svg",
+          "name" : "Purple"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
